@@ -1,1 +1,951 @@
-s
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>[CXDED]</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --black: #000;
+  --off:   #0a0a0a;
+  --cream: rgba(245,240,230,0.9);
+  --mid:   rgba(245,240,230,0.45);
+  --dim:   rgba(245,240,230,0.22);
+  --faint: rgba(245,240,230,0.1);
+  --line:  rgba(245,240,230,0.07);
+
+  /* brand signal colors — used sparingly, like PixelVault's red */
+  --em: #2dd47f;
+  --tl: #3aabd1;
+  --vi: #a85ed4;
+
+  --em-g: rgba(45,212,127,0.5);
+  --tl-g: rgba(58,171,209,0.45);
+  --vi-g: rgba(168,94,212,0.45);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  cursor: crosshair;
+}
+a { color: inherit; text-decoration: none; cursor: crosshair; }
+button { font: inherit; background: none; border: none; color: inherit; cursor: crosshair; padding: 0; }
+
+/* ── GRAIN ── heavy like PixelVault */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 9998;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  opacity: 0.18;
+  mix-blend-mode: screen;
+  animation: gr .4s steps(4) infinite;
+  will-change: transform;
+}
+@keyframes gr {
+  0%,100%{ transform:translate(0,0) }
+  25%    { transform:translate(-3%,-2%) }
+  50%    { transform:translate(2%, 3%) }
+  75%    { transform:translate(-2%, 2%) }
+}
+
+/* ── LOADING SCREEN ── cipher text before the page reveals */
+#loader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--black);
+  display: grid; place-items: center;
+  font-size: 12px; letter-spacing: 0.25em; color: var(--mid);
+  text-transform: uppercase;
+  transition: opacity 0.6s ease;
+}
+#loader.done { opacity: 0; pointer-events: none; }
+#cipher { letter-spacing: 0.35em; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: grid;
+  grid-template-columns: auto auto 1fr auto auto;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 24px;
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+}
+.nav-wordmark { color: var(--cream); font-weight: 500; }
+.nav-sound { color: var(--mid); text-decoration: line-through; text-decoration-thickness: 1px; }
+.nav-icon {
+  justify-self: center;
+  width: 52px; height: 30px;
+  background: var(--cream);
+  clip-path: polygon(0 60%, 15% 30%, 30% 55%, 50% 10%, 70% 55%, 85% 30%, 100% 60%, 90% 100%, 10% 100%);
+  /* Simple geometric brand mark — placeholder for CXDED's own mark */
+}
+.nav-gap { flex: 1; }
+.nav-link { color: var(--mid); transition: color 0.15s; }
+.nav-link:hover, .nav-link.active { color: var(--cream); }
+
+/* ── COPYRIGHT CORNER ── */
+.cr {
+  position: fixed; bottom: 16px; left: 20px; z-index: 50;
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--dim); pointer-events: none;
+}
+.cr .dot { color: var(--em); margin-right: 6px; }
+
+/* ═══════════════════════════════════════
+   SHOP LAYOUT
+═══════════════════════════════════════ */
+.shop {
+  padding-top: 72px;
+  min-height: 100vh;
+}
+
+/* ── PRODUCT DETAIL UI — spans top of page ── */
+.detail {
+  position: relative;
+  padding: 28px 24px 0;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 0;
+}
+/* [X] top-left */
+.detail::before {
+  content: '[X]';
+  position: absolute; top: 10px; left: 10px;
+  font-size: 9px; letter-spacing: 0.25em; color: var(--dim);
+}
+/* [X] top-right */
+.detail::after {
+  content: '[X]';
+  position: absolute; top: 10px; right: 10px;
+  font-size: 9px; letter-spacing: 0.25em; color: var(--dim);
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: start;
+}
+.detail-left { display: flex; flex-direction: column; gap: 16px; }
+
+/* Product name row */
+.d-name-row {
+  display: flex; align-items: baseline; gap: 12px;
+}
+.d-name {
+  font-size: 13px; font-weight: 400; letter-spacing: 0.1em;
+  color: var(--cream); text-transform: none;
+}
+.d-plus {
+  font-size: 11px; color: var(--dim);
+}
+
+/* Ref + price */
+.d-ref { color: var(--mid); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; }
+.d-price { color: var(--em); font-size: 12px; letter-spacing: 0.15em; font-weight: 500; }
+
+/* Description */
+.d-desc-label {
+  font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--cream); display: flex; align-items: center; gap: 12px;
+}
+.d-desc-label .plus { color: var(--dim); }
+.d-desc-body {
+  font-size: 11px; letter-spacing: 0.05em; line-height: 1.6;
+  color: var(--mid); max-width: 420px;
+}
+
+/* Right side — sizes + buy */
+.detail-right {
+  display: flex; flex-direction: column;
+  align-items: flex-end; gap: 14px;
+  text-align: right;
+}
+.d-find-size {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--cream);
+}
+.d-sizes-label {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--mid);
+}
+.d-sizes {
+  display: flex; gap: 20px; align-items: center;
+  font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+}
+.sz { color: var(--mid); transition: color 0.15s; }
+.sz:hover { color: var(--cream); }
+.sz.active { color: var(--em); }
+.sz.sold-out { color: var(--dim); text-decoration: line-through; }
+.d-buy {
+  font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--cream); transition: color 0.15s;
+}
+.d-buy::before { content: '[ '; color: var(--dim); }
+.d-buy::after { content: ' ]'; color: var(--dim); }
+.d-buy:hover { color: var(--em); }
+
+/* [X] center marker between cols */
+.d-center-x {
+  position: absolute;
+  /* sits in the rough center of the detail area */
+  top: 72px; left: 50%; transform: translateX(-50%);
+  font-size: 9px; letter-spacing: 0.2em; color: var(--dim);
+}
+
+/* ── PRODUCT STAGE ── */
+.stage {
+  position: relative;
+  width: 100%;
+  /* aspect scales to content — large square */
+  padding-top: 24px;
+}
+
+/* Watermark — giant product name scrolling behind garment */
+.stage-watermark {
+  position: absolute;
+  top: 50%; left: 0; right: 0;
+  transform: translateY(-50%);
+  font-size: clamp(64px, 12vw, 160px);
+  font-weight: 700; letter-spacing: -0.02em;
+  color: rgba(245,240,230,0.04);
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Targeting arc behind the garment */
+.stage-arc {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(520px, 70vw); height: min(520px, 70vw);
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  pointer-events: none;
+  z-index: 1;
+}
+.stage-arc::before {
+  content: '';
+  position: absolute; inset: -24px;
+  border-radius: 50%;
+  border: 1px solid var(--faint);
+}
+
+/* The actual product image */
+.stage-img-wrap {
+  position: relative; z-index: 2;
+  display: grid; place-items: center;
+  padding: 60px 20px;
+  min-height: min(80vh, 800px);
+}
+.stage-img {
+  width: min(480px, 65vw);
+  height: auto;
+  object-fit: contain;
+  display: block;
+  animation: float 6s ease-in-out infinite;
+  will-change: transform;
+  filter: drop-shadow(0 0 40px rgba(45,212,127,0.12)) drop-shadow(0 40px 80px rgba(0,0,0,0.8));
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+/* stage corner markers */
+.stage-x {
+  position: absolute;
+  font-size: 9px; letter-spacing: 0.25em;
+  color: var(--dim); pointer-events: none;
+  z-index: 3;
+}
+.stage-x.tl { top: 16px; left: 16px; }
+.stage-x.tr { top: 16px; right: 16px; }
+.stage-x.bl { bottom: 16px; left: 16px; }
+.stage-x.br { bottom: 16px; right: 16px; }
+
+/* ── BARCODE ── */
+.barcode-wrap {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 8px;
+  padding: 20px 0 24px;
+  border-top: 1px solid var(--line);
+}
+.barcode {
+  display: flex; align-items: flex-end; gap: 0;
+  height: 32px;
+}
+.b { background: var(--cream); display: inline-block; height: 100%; }
+.b1 { width: 2px; }
+.b2 { width: 4px; }
+.b3 { width: 1px; }
+.g  { width: 3px; } /* gap */
+.barcode-label {
+  font-size: 9px; letter-spacing: 0.35em;
+  color: var(--dim); text-transform: uppercase;
+}
+
+/* ── PHOTO STRIP ── */
+.photo-strip-wrap {
+  border-top: 1px solid var(--line);
+  overflow: hidden;
+}
+.photo-strip-label {
+  padding: 14px 24px 12px;
+  font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--dim);
+  border-bottom: 1px solid var(--line);
+}
+.photo-strip {
+  display: flex; gap: 1px;
+  background: var(--line);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.photo-strip::-webkit-scrollbar { display: none; }
+.photo-tile {
+  flex-shrink: 0;
+  width: 30vw; max-width: 200px;
+  aspect-ratio: 0.75;
+  background: var(--off);
+  position: relative;
+  overflow: hidden;
+  cursor: crosshair;
+}
+.photo-tile img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  display: block;
+  filter: grayscale(20%);
+  transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);
+}
+.photo-tile:hover img { transform: scale(1.04); }
+
+/* The "lookbook" tiles that use campaign images */
+.photo-tile.campaign img {
+  filter: none; /* keep campaign images in color */
+}
+
+/* ── VAULT GRID ── */
+.vault {
+  border-top: 1px solid var(--line);
+  margin-top: 48px;
+}
+.vault-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--line);
+  font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--dim);
+}
+.vault-header .live-em {
+  color: var(--em);
+  display: flex; align-items: center; gap: 8px;
+}
+.live-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--em); box-shadow: 0 0 6px var(--em-g);
+  animation: lp 1.6s ease-in-out infinite;
+}
+@keyframes lp { 0%,100%{opacity:1}50%{opacity:.3} }
+
+.vault-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: var(--line); /* becomes the 1px gaps */
+}
+
+/* Divider lines visible as background showing through 1px gaps */
+.vault-cell {
+  background: var(--black);
+  aspect-ratio: 1;
+  position: relative;
+  display: grid; place-items: center;
+  cursor: crosshair;
+  overflow: hidden;
+  transition: background 0.3s;
+}
+.vault-cell:hover { background: rgba(45,212,127,0.025); }
+
+/* [X] corners on every cell */
+.vault-cell::before {
+  content: '[X]'; position: absolute;
+  top: 14px; left: 14px;
+  font-size: 9px; letter-spacing: 0.2em; color: var(--dim);
+  z-index: 2;
+}
+.vault-cell::after {
+  content: '[X]'; position: absolute;
+  bottom: 14px; right: 14px;
+  font-size: 9px; letter-spacing: 0.2em; color: var(--dim);
+  z-index: 2;
+}
+
+/* Targeting arc per cell */
+.cell-arc {
+  position: absolute; inset: 12%;
+  border-radius: 50%;
+  border: 1px solid rgba(245,240,230,0.05);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cell-img {
+  width: 62%; height: 62%;
+  object-fit: contain;
+  position: relative; z-index: 2;
+  opacity: 0.75;
+  transition: opacity 0.3s, transform 0.6s cubic-bezier(0.2,0.8,0.2,1);
+  filter: drop-shadow(0 0 20px rgba(45,212,127,0.0));
+}
+.vault-cell:hover .cell-img {
+  opacity: 1;
+  transform: scale(1.06);
+  filter: drop-shadow(0 0 24px rgba(45,212,127,0.3));
+}
+.vault-cell.teal:hover .cell-img {
+  filter: drop-shadow(0 0 24px rgba(58,171,209,0.3));
+}
+.vault-cell.violet:hover .cell-img {
+  filter: drop-shadow(0 0 24px rgba(168,94,212,0.3));
+}
+
+/* Cell meta info — appears on hover */
+.cell-meta {
+  position: absolute; bottom: 28px; left: 14px; right: 14px;
+  z-index: 3;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s, transform 0.25s;
+  font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+}
+.vault-cell:hover .cell-meta { opacity: 1; transform: translateY(0); }
+.cell-meta .name { color: var(--cream); }
+.cell-meta .price.em { color: var(--em); }
+.cell-meta .price.tl { color: var(--tl); }
+.cell-meta .price.vi { color: var(--vi); }
+.cell-meta .price.cr { color: var(--mid); }
+.cell-meta .price.so { color: var(--dim); text-decoration: line-through; }
+
+/* ── TICKER ── */
+.ticker {
+  border-top: 1px solid var(--line);
+  overflow: hidden;
+  background: var(--off);
+  margin-top: 1px;
+}
+.ticker-track {
+  display: flex; gap: 52px;
+  padding: 13px 0;
+  width: max-content;
+  animation: tx 36s linear infinite;
+}
+@keyframes tx {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.t-item {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--dim); white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.t-item::before { content: '◇'; color: rgba(245,240,230,0.12); font-size: 9px; }
+.t-item.em { color: var(--em); }
+.t-item.em::before { color: rgba(45,212,127,0.35); }
+
+/* ── FOOTER ── */
+footer {
+  padding: 52px 24px 28px;
+  border-top: 1px solid var(--line);
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px;
+}
+.foot-logo {
+  font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--cream); font-weight: 500; margin-bottom: 14px;
+}
+.foot-tag {
+  font-size: 11px; letter-spacing: 0.06em; line-height: 1.6;
+  color: var(--dim); margin-bottom: 24px;
+}
+.foot-newsletter label {
+  font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--dim); display: block; margin-bottom: 10px;
+}
+.foot-form {
+  display: flex; border: 1px solid var(--line);
+}
+.foot-form input {
+  flex: 1; background: transparent; border: none;
+  color: var(--cream); padding: 10px 12px;
+  font: inherit; font-size: 11px; outline: none;
+}
+.foot-form input::placeholder { color: var(--dim); }
+.foot-form button {
+  padding: 0 14px; font-size: 10px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--mid); border-left: 1px solid var(--line);
+  transition: color 0.15s, background 0.15s;
+}
+.foot-form button:hover { color: var(--black); background: var(--cream); }
+
+.foot-col-label {
+  font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 18px;
+}
+.foot-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.foot-links a {
+  font-size: 12px; letter-spacing: 0.06em; color: var(--mid); transition: color 0.15s;
+}
+.foot-links a:hover { color: var(--cream); }
+
+.foot-bottom {
+  grid-column: 1/-1;
+  padding-top: 24px; margin-top: 8px;
+  border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--dim);
+}
+.foot-legal { display: flex; gap: 20px; flex-wrap: wrap; }
+.foot-legal a:hover { color: var(--cream); }
+
+/* ── PIECE SELECTOR ── */
+.piece-selector {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.piece-btn {
+  color: var(--dim);
+  transition: color 0.2s;
+  padding: 6px 0;
+}
+.piece-btn:hover { color: var(--cream); }
+.piece-btn.active { color: var(--em); }
+.piece-sep { color: var(--faint); }
+
+/* tile-tag on photo strip */
+.photo-tile { position: relative; }
+.tile-tag {
+  position: absolute;
+  bottom: 10px; left: 10px;
+  font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: rgba(245,240,230,0.55);
+  pointer-events: none;
+}
+
+/* product tiles — keep dark bg consistent */
+.photo-tile.product img {
+  object-position: center center;
+  background: var(--black);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { gap: 12px; padding: 16px 16px; font-size: 10px; }
+  .detail-grid { grid-template-columns: 1fr; }
+  .detail-right { align-items: flex-start; text-align: left; }
+  .vault-grid { grid-template-columns: repeat(2, 1fr); }
+  footer { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  nav .nav-link.hide { display: none; }
+  .vault-grid { grid-template-columns: repeat(2, 1fr); }
+  footer { grid-template-columns: 1fr; }
+  .foot-bottom { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── LOADING SCREEN ── -->
+<div id="loader">
+  <div id="cipher">[ CXDED ]</div>
+</div>
+
+<!-- ── COPYRIGHT CORNER ── -->
+<div class="cr"><span class="dot">©</span>2026 [CXDED]</div>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-wordmark">[CXDED]</a>
+  <a href="#" class="nav-sound">SOUND</a>
+  <div class="nav-icon" aria-hidden="true"></div>
+  <div></div>
+  <a href="#" class="nav-link active">SHOP</a>
+  <a href="#" class="nav-link hide">LOOKBOOK</a>
+</nav>
+
+<div class="shop">
+
+  <!-- ── PRODUCT DETAIL UI ── -->
+  <div class="detail">
+    <div class="d-center-x">[X]</div>
+    <div class="detail-grid">
+      <div class="detail-left">
+        <div class="d-name-row">
+          <span class="d-name">Coded Tracksuit</span>
+          <span class="d-plus">[+]</span>
+        </div>
+        <div class="d-ref">Ref. 001</div>
+        <div class="d-price">CHF 285.00</div>
+        <div>
+          <div class="d-desc-label">
+            DESCRIPTION <span class="plus">[+]</span>
+          </div>
+          <div class="d-desc-body">
+            Heavyweight French terry. Oversized boxy fit. The wordmark CODED traces curving seam-lines across the body in three colorways — a signal that resolves only when worn in motion.
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-right">
+        <div class="d-find-size">FIND YOUR SIZE</div>
+        <div class="d-sizes-label">SIZES</div>
+        <div class="d-sizes">
+          <button class="sz">S</button>
+          <button class="sz active">M</button>
+          <button class="sz">L</button>
+          <button class="sz sold-out">XL</button>
+          <button class="sz sold-out">XXL</button>
+        </div>
+        <a href="#" class="d-buy">BUY NOW</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PRODUCT STAGE ── -->
+  <div class="stage">
+    <span class="stage-x tl">[X]</span>
+    <span class="stage-x tr">[X]</span>
+    <span class="stage-x bl">[X]</span>
+    <span class="stage-x br">[X]</span>
+
+    <div class="stage-watermark" id="stage-wm">Coded Tracksuit</div>
+    <div class="stage-arc"></div>
+
+    <div class="stage-img-wrap">
+      <img class="stage-img" id="stage-main" src="hoodie.png" alt="Coded Tracksuit — Hoodie"/>
+    </div>
+
+    <!-- piece selector — bottom center of stage -->
+    <div class="piece-selector">
+      <button class="piece-btn active" data-src="hoodie.png" data-label="Hoodie">[ HOODIE ]</button>
+      <span class="piece-sep">/</span>
+      <button class="piece-btn" data-src="joggers.jpg" data-label="Joggers">[ JOGGERS ]</button>
+      <span class="piece-sep">/</span>
+      <button class="piece-btn" data-src="product_emerald.png" data-label="Set">[ SET ]</button>
+    </div>
+  </div>
+
+  <!-- ── BARCODE ── -->
+  <div class="barcode-wrap">
+    <div class="barcode">
+      <span class="b b2"></span><span class="g"></span>
+      <span class="b b1"></span><span class="g"></span>
+      <span class="b b3"></span><span class="g"></span>
+      <span class="b b2"></span><span class="g"></span>
+      <span class="b b1"></span><span class="g"></span>
+      <span class="b b2"></span><span class="g"></span>
+      <span class="b b3"></span><span class="g"></span>
+      <span class="b b1"></span><span class="g"></span>
+      <span class="b b2"></span><span class="g"></span>
+      <span class="b b3"></span><span class="g"></span>
+      <span class="b b1"></span><span class="g"></span>
+      <span class="b b2"></span><span class="g"></span>
+      <span class="b b1"></span><span class="g"></span>
+      <span class="b b3"></span><span class="g"></span>
+      <span class="b b2"></span><span class="g"></span>
+      <span class="b b1"></span><span class="g"></span>
+      <span class="b b3"></span><span class="g"></span>
+      <span class="b b2"></span><span class="g"></span>
+      <span class="b b1"></span><span class="g"></span>
+      <span class="b b2"></span><span class="g"></span>
+      <span class="b b3"></span><span class="g"></span>
+      <span class="b b1"></span><span class="g"></span>
+      <span class="b b2"></span><span class="g"></span>
+      <span class="b b2"></span><span class="g"></span>
+      <span class="b b1"></span><span class="g"></span>
+      <span class="b b3"></span><span class="g"></span>
+      <span class="b b2"></span>
+    </div>
+    <div class="barcode-label">7 81000 04001 — [DROP / 01] — CXDED SS26</div>
+  </div>
+
+  <!-- ── PHOTO STRIP — product + campaign ── -->
+  <div class="photo-strip-wrap">
+    <div class="photo-strip-label">[ PRODUCT + CAMPAIGN / DROP 01 ]</div>
+    <div class="photo-strip">
+      <!-- Product shots first -->
+      <div class="photo-tile product">
+        <img src="hoodie.png" alt="Coded Hoodie — Spectrum"/>
+        <span class="tile-tag">HOODIE</span>
+      </div>
+      <div class="photo-tile product">
+        <img src="joggers.jpg" alt="Coded Joggers — Spectrum"/>
+        <span class="tile-tag">JOGGERS</span>
+      </div>
+      <div class="photo-tile product">
+        <img src="product_emerald.png" alt="Coded Set — Emerald"/>
+        <span class="tile-tag">SET</span>
+      </div>
+      <!-- Campaign shots -->
+      <div class="photo-tile campaign">
+        <img src="emperor.png" alt="The Emperor"/>
+        <span class="tile-tag">CAMPAIGN 01</span>
+      </div>
+      <div class="photo-tile campaign">
+        <img src="london_night.png" alt="London Night"/>
+        <span class="tile-tag">CAMPAIGN 02</span>
+      </div>
+      <div class="photo-tile campaign">
+        <img src="london_day.png" alt="London Day"/>
+        <span class="tile-tag">CAMPAIGN 03</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VAULT GRID ── -->
+  <div class="vault">
+    <div class="vault-header">
+      <span>[ VAULT / DROP 01 ] — 5 ARTIFACTS</span>
+      <span class="live-em"><span class="live-dot"></span> LIVE</span>
+    </div>
+    <div class="vault-grid">
+
+      <!-- Emerald — hoodie -->
+      <div class="vault-cell">
+        <div class="cell-arc"></div>
+        <img class="cell-img" src="hoodie.png" alt="Emerald Hoodie"/>
+        <div class="cell-meta">
+          <span class="name">EMERALD / HOODIE</span>
+          <span class="price em">285.00</span>
+        </div>
+      </div>
+
+      <!-- Emerald — joggers -->
+      <div class="vault-cell">
+        <div class="cell-arc"></div>
+        <img class="cell-img" src="joggers.jpg" alt="Emerald Joggers"/>
+        <div class="cell-meta">
+          <span class="name">EMERALD / JOGGERS</span>
+          <span class="price em">285.00</span>
+        </div>
+      </div>
+
+      <!-- Full set -->
+      <div class="vault-cell">
+        <div class="cell-arc"></div>
+        <img class="cell-img" src="product_emerald.png" alt="Emerald Set"/>
+        <div class="cell-meta">
+          <span class="name">EMERALD / SET</span>
+          <span class="price em">285.00</span>
+        </div>
+      </div>
+
+      <!-- Teal placeholder -->
+      <div class="vault-cell teal">
+        <div class="cell-arc"></div>
+        <img class="cell-img" src="product_emerald.png" alt="Teal"
+             style="filter:hue-rotate(175deg) saturate(1.1)"/>
+        <div class="cell-meta">
+          <span class="name">TEAL</span>
+          <span class="price tl">285.00</span>
+        </div>
+      </div>
+
+      <!-- Violet placeholder -->
+      <div class="vault-cell violet">
+        <div class="cell-arc"></div>
+        <img class="cell-img" src="product_emerald.png" alt="Violet"
+             style="filter:hue-rotate(260deg) saturate(1.2)"/>
+        <div class="cell-meta">
+          <span class="name">VIOLET</span>
+          <span class="price vi">285.00</span>
+        </div>
+      </div>
+
+      <!-- Spectrum placeholder -->
+      <div class="vault-cell">
+        <div class="cell-arc"></div>
+        <img class="cell-img" src="product_emerald.png" alt="Spectrum"
+             style="filter:saturate(1.4)"/>
+        <div class="cell-meta">
+          <span class="name">SPECTRUM</span>
+          <span class="price em">320.00</span>
+        </div>
+      </div>
+
+      <!-- Locked -->
+      <div class="vault-cell" style="opacity:0.3;">
+        <div class="cell-arc"></div>
+        <div style="font-size:9px;letter-spacing:0.35em;color:var(--dim);text-transform:uppercase;text-align:center;position:relative;z-index:2;">
+          [ LOCKED ]<br>
+          <span style="margin-top:8px;display:block;font-size:8px;color:var(--faint)">Q3 2026</span>
+        </div>
+        <div class="cell-meta">
+          <span class="name">—</span>
+          <span class="price cr">—</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── TICKER ── -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="t-item em">Drop 01 / Live</span>
+      <span class="t-item">300 edition artifacts</span>
+      <span class="t-item">Free worldwide over CHF 250</span>
+      <span class="t-item em">Emerald — in stock</span>
+      <span class="t-item">No restocks · Ever</span>
+      <span class="t-item">Cut & sewn · Portugal</span>
+      <span class="t-item">SS 2026</span>
+      <span class="t-item em">Drop 01 / Live</span>
+      <span class="t-item">300 edition artifacts</span>
+      <span class="t-item">Free worldwide over CHF 250</span>
+      <span class="t-item em">Emerald — in stock</span>
+      <span class="t-item">No restocks · Ever</span>
+      <span class="t-item">Cut & sewn · Portugal</span>
+      <span class="t-item">SS 2026</span>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div>
+      <div class="foot-logo">[CXDED]</div>
+      <div class="foot-tag">Encoded garments.<br>Limited runs from Zürich.<br>No restocks. Ever.</div>
+      <div class="foot-newsletter">
+        <label>— Drop 02 access</label>
+        <form class="foot-form" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="your@email.com"/>
+          <button type="submit">→</button>
+        </form>
+      </div>
+    </div>
+    <div>
+      <div class="foot-col-label">— Shop</div>
+      <ul class="foot-links">
+        <li><a href="#">Drop 01</a></li>
+        <li><a href="#">Lookbook</a></li>
+        <li><a href="#">Archive</a></li>
+        <li><a href="#">Sizing</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="foot-col-label">— Service</div>
+      <ul class="foot-links">
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Care</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="foot-col-label">— Studio</div>
+      <ul class="foot-links">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">TikTok</a></li>
+      </ul>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 [CXDED] · Zürich</span>
+      <div class="foot-legal">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+// ── Cipher loading screen
+const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@!$%&';
+const TARGET = 'CXDED';
+const el = document.getElementById('cipher');
+const loader = document.getElementById('loader');
+let step = 0;
+const total = 38;
+
+const tick = setInterval(() => {
+  step++;
+  let out = '[ ';
+  for (let i = 0; i < TARGET.length; i++) {
+    if (step > 6 + i * 6) {
+      out += TARGET[i];
+    } else {
+      out += CHARS[Math.floor(Math.random() * CHARS.length)];
+    }
+  }
+  out += ' ]';
+  el.textContent = out;
+
+  if (step >= total) {
+    clearInterval(tick);
+    el.textContent = '[ CXDED ]';
+    setTimeout(() => loader.classList.add('done'), 400);
+  }
+}, 60);
+
+// ── Piece selector
+document.querySelectorAll('.piece-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.piece-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const img = document.getElementById('stage-main');
+    const wm = document.getElementById('stage-wm');
+    img.style.opacity = '0';
+    img.style.transform = 'translateY(-8px) scale(0.97)';
+    setTimeout(() => {
+      img.src = btn.dataset.src;
+      img.alt = 'Coded Tracksuit — ' + btn.dataset.label;
+      wm.textContent = btn.dataset.label === 'Set' ? 'Coded Tracksuit' : 'Coded ' + btn.dataset.label;
+      img.style.opacity = '1';
+      img.style.transform = '';
+    }, 220);
+  });
+});
+
+// ── Size selector
+document.querySelectorAll('.sz:not(.sold-out)').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sz').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
