@@ -8,30 +8,28 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
+  <script type="importmap">
+    {"imports": {"three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js"}}
+  </script>
 </head>
 <body>
+
+  <!-- WebGL background canvas -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
   <!-- Film grain overlay -->
   <div class="grain" aria-hidden="true"></div>
 
-  <!-- Cipher loading screen -->
+  <!-- PixelVault-style loading screen -->
   <div class="loader" id="loader">
-    <div class="loader-inner">
-      <div class="loader-label" id="loaderLabel">[INITIALISING_ARCHIVE...]</div>
-      <div class="loader-brand" id="loaderBrand">
-        <span class="cipher-char" data-char="C">_</span><span class="cipher-char" data-char="O">_</span><span class="cipher-char" data-char="D">_</span><span class="cipher-char" data-char="E">_</span><span class="cipher-char" data-char="D">_</span>
-      </div>
-      <div class="loader-bar-wrap">
-        <div class="loader-bar" id="loaderBar"></div>
-      </div>
-      <div class="loader-access" id="loaderAccess"></div>
-    </div>
+    <div class="loader-cipher" id="loaderCipher">[____________]</div>
   </div>
 
   <!-- Nav -->
   <nav class="nav" id="nav">
     <div class="nav-inner">
-      <a href="#" class="nav-logo">CODED</a>
+      <a href="#hero" class="nav-logo">CODED</a>
       <div class="nav-links">
         <a href="#product" class="nav-link">[SHOP]</a>
         <a href="#vault" class="nav-link">[VAULT]</a>
@@ -44,12 +42,26 @@
     </div>
   </nav>
 
+  <!-- Hero Section -->
+  <section class="hero-section" id="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow reveal">[ZÜRICH_SS25 — REF CX-001]</div>
+      <h1 class="hero-title reveal" id="heroTitle">CODED</h1>
+      <div class="hero-subtitle reveal">300 ARTIFACTS. NO RESTOCK. WORN EVERYWHERE.</div>
+      <a href="#product" class="hero-cta reveal">[ENTER THE VAULT]</a>
+    </div>
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <span class="scroll-line"></span>
+      <span class="scroll-label">SCROLL</span>
+    </div>
+  </section>
+
   <!-- Product Detail Section -->
   <section class="product-section" id="product">
     <div class="product-grid">
 
       <!-- Left: Info -->
-      <div class="product-info">
+      <div class="product-info reveal">
         <div class="product-ref">REF — CX-001-SS25</div>
         <h1 class="product-name">CODED<br>TRACKSUIT</h1>
         <div class="product-divider"></div>
@@ -86,9 +98,9 @@
       </div>
 
       <!-- Right: Visual -->
-      <div class="product-visual">
+      <div class="product-visual reveal">
         <div class="product-watermark" aria-hidden="true">CODED TRACKSUIT</div>
-        <div class="product-img-wrap">
+        <div class="product-img-wrap scan-overlay" id="productImgWrap">
           <img
             src="assets/hoodie.png"
             alt="Coded Tracksuit"
@@ -147,7 +159,7 @@
 
   <!-- Vault Grid -->
   <section class="vault-section" id="vault">
-    <div class="vault-header">
+    <div class="vault-header reveal">
       <span class="vault-label">[VAULT]</span>
       <span class="vault-meta">— 5 COLORWAYS — 300 UNITS —</span>
     </div>
@@ -155,7 +167,7 @@
     <div class="vault-grid">
 
       <!-- Cream -->
-      <div class="vault-cell" data-colorway="cream">
+      <div class="vault-cell reveal" data-colorway="cream" style="--cell-glow: rgba(240,235,216,0.12)">
         <div class="vault-corners" aria-hidden="true">
           <span class="corner corner-tl"></span>
           <span class="corner corner-tr"></span>
@@ -167,7 +179,7 @@
             <circle cx="100" cy="100" r="78" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="100 390" stroke-dashoffset="0"/>
           </svg>
         </div>
-        <div class="vault-img-wrap">
+        <div class="vault-img-wrap scan-overlay">
           <img src="assets/cream_set.png" alt="Cream" onerror="this.style.display='none'">
           <div class="vault-swatch-bg" style="--sw:#f0ebd8"></div>
         </div>
@@ -178,7 +190,7 @@
       </div>
 
       <!-- Emerald -->
-      <div class="vault-cell" data-colorway="emerald">
+      <div class="vault-cell reveal" data-colorway="emerald" style="--cell-glow: rgba(45,212,127,0.14)">
         <div class="vault-corners" aria-hidden="true">
           <span class="corner corner-tl"></span>
           <span class="corner corner-tr"></span>
@@ -190,7 +202,7 @@
             <circle cx="100" cy="100" r="78" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="100 390" stroke-dashoffset="65"/>
           </svg>
         </div>
-        <div class="vault-img-wrap">
+        <div class="vault-img-wrap scan-overlay">
           <img src="assets/product_emerald.png" alt="Emerald" onerror="this.style.display='none'">
           <div class="vault-swatch-bg" style="--sw:#2dd47f"></div>
         </div>
@@ -201,7 +213,7 @@
       </div>
 
       <!-- Teal -->
-      <div class="vault-cell" data-colorway="teal">
+      <div class="vault-cell reveal" data-colorway="teal" style="--cell-glow: rgba(58,171,209,0.14)">
         <div class="vault-corners" aria-hidden="true">
           <span class="corner corner-tl"></span>
           <span class="corner corner-tr"></span>
@@ -213,7 +225,7 @@
             <circle cx="100" cy="100" r="78" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="100 390" stroke-dashoffset="130"/>
           </svg>
         </div>
-        <div class="vault-img-wrap">
+        <div class="vault-img-wrap scan-overlay">
           <img src="assets/teal_set.png" alt="Teal" onerror="this.style.display='none'">
           <div class="vault-swatch-bg" style="--sw:#3aabd1"></div>
         </div>
@@ -224,7 +236,7 @@
       </div>
 
       <!-- Violet -->
-      <div class="vault-cell" data-colorway="violet">
+      <div class="vault-cell reveal" data-colorway="violet" style="--cell-glow: rgba(168,94,212,0.14)">
         <div class="vault-corners" aria-hidden="true">
           <span class="corner corner-tl"></span>
           <span class="corner corner-tr"></span>
@@ -236,7 +248,7 @@
             <circle cx="100" cy="100" r="78" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="100 390" stroke-dashoffset="195"/>
           </svg>
         </div>
-        <div class="vault-img-wrap">
+        <div class="vault-img-wrap scan-overlay">
           <img src="assets/violet_set.png" alt="Violet" onerror="this.style.display='none'">
           <div class="vault-swatch-bg" style="--sw:#a85ed4"></div>
         </div>
@@ -247,7 +259,7 @@
       </div>
 
       <!-- Spectrum (spans 2 cols) -->
-      <div class="vault-cell vault-cell--spectrum" data-colorway="spectrum">
+      <div class="vault-cell vault-cell--spectrum reveal" data-colorway="spectrum" style="--cell-glow: rgba(45,212,127,0.1)">
         <div class="vault-corners" aria-hidden="true">
           <span class="corner corner-tl"></span>
           <span class="corner corner-tr"></span>
@@ -259,7 +271,7 @@
             <circle cx="100" cy="100" r="78" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="100 390" stroke-dashoffset="260"/>
           </svg>
         </div>
-        <div class="vault-img-wrap">
+        <div class="vault-img-wrap scan-overlay">
           <img src="assets/hoodie.png" alt="Spectrum" onerror="this.style.display='none'">
           <div class="vault-swatch-bg vault-swatch-bg--spectrum"></div>
         </div>
@@ -283,10 +295,20 @@
     </div>
   </div>
 
+  <!-- Reverse Ticker -->
+  <div class="ticker ticker--reverse" aria-hidden="true">
+    <div class="ticker-track ticker-track--reverse">
+      <span>SPECTRUM EDITION &nbsp;— CHF 320 —&nbsp; EMERALD &nbsp;— TEAL —&nbsp; VIOLET &nbsp;— CREAM —&nbsp; 5 COLORWAYS &nbsp;— LIMITED RUN &nbsp;— ZÜRICH &nbsp;— </span>
+      <span>SPECTRUM EDITION &nbsp;— CHF 320 —&nbsp; EMERALD &nbsp;— TEAL —&nbsp; VIOLET &nbsp;— CREAM —&nbsp; 5 COLORWAYS &nbsp;— LIMITED RUN &nbsp;— ZÜRICH &nbsp;— </span>
+      <span>SPECTRUM EDITION &nbsp;— CHF 320 —&nbsp; EMERALD &nbsp;— TEAL —&nbsp; VIOLET &nbsp;— CREAM —&nbsp; 5 COLORWAYS &nbsp;— LIMITED RUN &nbsp;— ZÜRICH &nbsp;— </span>
+      <span>SPECTRUM EDITION &nbsp;— CHF 320 —&nbsp; EMERALD &nbsp;— TEAL —&nbsp; VIOLET &nbsp;— CREAM &nbsp;— 5 COLORWAYS &nbsp;— LIMITED RUN &nbsp;— ZÜRICH &nbsp;— </span>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="footer" id="footer">
     <div class="footer-grid">
-      <div class="footer-brand">
+      <div class="footer-brand reveal">
         <div class="footer-logo">CODED</div>
         <div class="footer-tagline">CODED IN ZÜRICH.<br>WORN EVERYWHERE.</div>
         <div class="footer-links-social">
@@ -294,13 +316,13 @@
           <a href="#" class="footer-link">[TW]</a>
         </div>
       </div>
-      <div class="footer-nav">
+      <div class="footer-nav reveal">
         <a href="#product" class="footer-link">[SHOP]</a>
         <a href="#vault" class="footer-link">[VAULT]</a>
         <a href="#" class="footer-link">[ZÜRICH]</a>
         <a href="#" class="footer-link">[ARCHIVE]</a>
       </div>
-      <div class="footer-newsletter">
+      <div class="footer-newsletter reveal">
         <div class="newsletter-label">JOIN THE ARCHIVE</div>
         <form class="newsletter-form" onsubmit="return false">
           <input type="email" class="newsletter-input" placeholder="[EMAIL_ADDRESS_____________]" autocomplete="email">
@@ -311,6 +333,6 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
