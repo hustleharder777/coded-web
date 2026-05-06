@@ -371,25 +371,25 @@ if (productImgWrap) {
 (function () {
   const imageMap = {
     hoodie: {
-      spectrum: 'assets/hoodie.png',
-      emerald:  'assets/emerald_hoodie.png',
-      teal:     'assets/teal_hoodie.png',
-      violet:   'assets/violet_hoodie.png',
-      cream:    'assets/cream_hoodie.png',
+      spectrum: 'assets/image.png',
+      emerald:  'assets/image.png',
+      teal:     'assets/image.png',
+      violet:   'assets/image.png',
+      cream:    'assets/image.png',
     },
     joggers: {
-      spectrum: 'assets/joggers.jpg',
-      emerald:  'assets/emerald_joggers.png',
-      teal:     'assets/teal_joggers.png',
-      violet:   'assets/violet_joggers.png',
-      cream:    'assets/cream_joggers.png',
+      spectrum: 'assets/image.jpeg',
+      emerald:  'assets/image.jpeg',
+      teal:     'assets/image.jpeg',
+      violet:   'assets/image.jpeg',
+      cream:    'assets/image.jpeg',
     },
     set: {
-      spectrum: 'assets/hoodie.png',
-      emerald:  'assets/product_emerald.png',
-      teal:     'assets/teal_set.png',
-      violet:   'assets/violet_set.png',
-      cream:    'assets/cream_set.png',
+      spectrum: 'assets/image.png',
+      emerald:  'assets/image.png',
+      teal:     'assets/image.png',
+      violet:   'assets/image.png',
+      cream:    'assets/image.png',
     }
   };
 
