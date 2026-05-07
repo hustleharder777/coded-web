@@ -127,7 +127,7 @@
         loader.classList.add('fade-out');
         document.body.style.overflow = '';
         setTimeout(function () {
-          loader.classList.add('hidden');
+          window.location.href = 'vault.html';
         }, 650);
       }, 500);
     }, wait);
