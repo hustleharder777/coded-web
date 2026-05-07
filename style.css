@@ -1137,62 +1137,86 @@ body.vault-page.page-ready {
 }
 
 /* ================================================================
-   BRAND HERO (vault.html)
+   BRAND HERO (vault.html) — full-bleed, rain over image
    ================================================================ */
-.brand-hero {
-  min-height: 100vh;
-  padding-top: var(--nav-h);
-  display: flex;
-  align-items: center;
-  position: relative;
+
+/* Canvas sits above hero image, blends so dark bg disappears */
+body.vault-page #bg-canvas {
+  z-index: 1;
+  mix-blend-mode: screen;
 }
 
-.brand-hero::before {
-  content: '';
+/* Sub-hero content lifts above canvas */
+.vault-content {
+  position: relative;
+  z-index: 2;
+  background: var(--bg);
+}
+
+.brand-hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 80px;
+}
+
+.brand-hero-bg-img {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse at 30% 50%, rgba(45,212,127,0.05), transparent 55%),
-    radial-gradient(ellipse at 75% 30%, rgba(58,171,209,0.04), transparent 50%);
-  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  z-index: 0;
 }
 
-.brand-hero-grid {
+.brand-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    to top,
+    rgba(4,4,6,0.96) 0%,
+    rgba(4,4,6,0.55) 35%,
+    rgba(4,4,6,0.15) 65%,
+    transparent 100%
+  );
+}
+
+.brand-hero-content {
+  position: relative;
+  z-index: 3;
+  padding: 0 60px;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 60px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
   width: 100%;
-  position: relative;
-  z-index: 1;
 }
 
 .brand-hero-ref {
   font-size: 10px;
   letter-spacing: 0.3em;
   color: var(--muted);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   text-transform: uppercase;
 }
 
 .brand-hero-title {
-  font-size: clamp(80px, 12vw, 160px);
+  font-size: clamp(64px, 12vw, 160px);
   font-weight: 800;
   letter-spacing: 0.08em;
   line-height: 0.9;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   text-transform: uppercase;
 }
 
 .brand-hero-tag {
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   color: var(--muted);
   line-height: 1.8;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   text-transform: uppercase;
 }
 
@@ -1200,7 +1224,7 @@ body.vault-page.page-ready {
   font-size: 10px;
   letter-spacing: 0.2em;
   color: rgba(255,255,255,0.3);
-  margin-bottom: 40px;
+  margin-bottom: 36px;
   text-transform: uppercase;
 }
 
@@ -1220,27 +1244,10 @@ body.vault-page.page-ready {
   background: rgba(45,212,127,0.04);
 }
 
-.brand-hero-visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.brand-hero-img {
-  max-height: 75vh;
-  width: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 0 60px rgba(45,212,127,0.07));
-}
-
-@media (max-width: 900px) {
-  .brand-hero-grid {
-    grid-template-columns: 1fr;
-    padding: 40px 24px;
-    gap: 40px;
-  }
-  .brand-hero-visual { order: -1; }
-  .brand-hero-img { max-height: 50vh; }
+@media (max-width: 800px) {
+  .brand-hero { padding-bottom: 56px; }
+  .brand-hero-content { padding: 0 24px; }
+  .brand-hero-title { font-size: clamp(52px, 16vw, 100px); }
 }
 
 /* ================================================================
