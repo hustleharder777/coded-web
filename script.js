@@ -195,21 +195,97 @@ document.querySelectorAll('.reveal').forEach(function (el) {
 
 
 /* ================================================================
-   VAULT CELL 3D TILT
+   COLORWAY SHOWCASE — auto-cycle with progress indicators
    ================================================================ */
-document.querySelectorAll('.vault-cell').forEach(function (cell) {
-  cell.addEventListener('mousemove', function (e) {
-    var r = cell.getBoundingClientRect();
-    var x = (e.clientX - r.left) / r.width  - 0.5;
-    var y = (e.clientY - r.top)  / r.height - 0.5;
-    cell.style.transition = 'border-color 0.3s, box-shadow 0.3s, transform 0.1s ease';
-    cell.style.transform  = 'perspective(700px) rotateY(' + (x * 10) + 'deg) rotateX(' + (-y * 10) + 'deg)';
+(function () {
+  var colorways = [
+    { id: 'emerald',  name: 'EMERALD',  price: '285' },
+    { id: 'teal',     name: 'TEAL',     price: '285' },
+    { id: 'violet',   name: 'VIOLET',   price: '285' },
+    { id: 'cream',    name: 'CREAM',    price: '285' },
+    { id: 'spectrum', name: 'SPECTRUM', price: '320' },
+  ];
+
+  var stage      = document.querySelector('.cw-stage');
+  var slides     = document.querySelectorAll('.cw-slide');
+  var indicators = document.querySelectorAll('.cw-indicator');
+  var nameEl     = document.querySelector('.cw-showcase-name');
+  var priceEl    = document.querySelector('.cw-showcase-price-val');
+  var cta        = document.querySelector('.cw-bar-cta');
+
+  if (!stage || !slides.length) return;
+
+  var current  = 0;
+  var timer    = null;
+  var paused   = false;
+  var DURATION = 3500;
+
+  function goTo(idx) {
+    slides[current].classList.remove('active');
+    indicators[current].classList.remove('playing');
+    indicators[current].classList.add('done');
+
+    current = ((idx % colorways.length) + colorways.length) % colorways.length;
+
+    /* Reset indicators after current */
+    for (var i = current + 1; i < indicators.length; i++) {
+      indicators[i].classList.remove('done', 'playing');
+    }
+
+    slides[current].classList.add('active');
+
+    /* Force reflow so CSS transition restarts */
+    void indicators[current].offsetWidth;
+    indicators[current].classList.remove('done');
+    indicators[current].classList.add('playing');
+
+    nameEl.textContent  = colorways[current].name;
+    priceEl.textContent = colorways[current].price;
+
+    if (!paused) schedule();
+  }
+
+  function schedule() {
+    clearTimeout(timer);
+    timer = setTimeout(function () { goTo(current + 1); }, DURATION);
+  }
+
+  /* Pause auto-cycle on hover */
+  stage.addEventListener('mouseenter', function () {
+    paused = true;
+    clearTimeout(timer);
+    indicators[current].classList.remove('playing');
   });
-  cell.addEventListener('mouseleave', function () {
-    cell.style.transition = 'border-color 0.3s, box-shadow 0.3s, transform 0.5s ease';
-    cell.style.transform  = '';
+  stage.addEventListener('mouseleave', function () {
+    paused = false;
+    void indicators[current].offsetWidth;
+    indicators[current].classList.add('playing');
+    schedule();
   });
-});
+
+  /* Click stage or CTA → sync colorway + scroll to product */
+  function syncAndShop() {
+    var cwId = colorways[current].id;
+    document.querySelectorAll('.cw-swatch').forEach(function (sw) {
+      if (sw.dataset.cw === cwId) sw.click();
+    });
+    var productSection = document.getElementById('product');
+    if (productSection) productSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  stage.addEventListener('click', syncAndShop);
+  if (cta) cta.addEventListener('click', syncAndShop);
+
+  /* Click indicator → jump to that colorway */
+  indicators.forEach(function (ind, i) {
+    ind.addEventListener('click', function (e) {
+      e.stopPropagation();
+      goTo(i);
+    });
+  });
+
+  goTo(0);
+})();
 
 
 /* ================================================================
@@ -375,20 +451,3 @@ if (productImgWrap) {
 })();
 
 
-/* ================================================================
-   VAULT CELL → SYNC TO PRODUCT SWITCHER
-   ================================================================ */
-(function () {
-  var vaultCells = document.querySelectorAll('.vault-cell');
-  var cwSwatches = document.querySelectorAll('.cw-swatch');
-
-  vaultCells.forEach(function (cell) {
-    cell.addEventListener('click', function () {
-      var cw = cell.dataset.colorway;
-      if (!cw) return;
-      cwSwatches.forEach(function (sw) { if (sw.dataset.cw === cw) sw.click(); });
-      var productSection = document.getElementById('product');
-      if (productSection) productSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  });
-})();

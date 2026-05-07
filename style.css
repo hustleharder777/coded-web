@@ -724,30 +724,20 @@ body::before {
 }
 
 /* ================================================================
-   VAULT GRID
+   COLORWAY SHOWCASE (replaces vault grid)
    ================================================================ */
 .vault-section {
   background: transparent;
-  padding: 80px 60px;
-  padding-top: calc(var(--nav-h) + 60px);
-  max-width: 1400px;
-  margin: 0 auto;
+  padding-top: 60px;
   position: relative;
-}
-
-.vault-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 40%, rgba(168,94,212,0.05), transparent 60%);
-  pointer-events: none;
 }
 
 .vault-header {
   display: flex;
   align-items: baseline;
   gap: 12px;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
+  padding: 0 60px;
   position: relative;
   z-index: 1;
 }
@@ -763,43 +753,33 @@ body::before {
   text-transform: uppercase;
 }
 
-.vault-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
+/* Stage — full-width cycling image */
+.cw-stage {
   position: relative;
-  z-index: 1;
-}
-
-.vault-cell--spectrum { grid-column: span 2; }
-
-.vault-cell {
-  position: relative;
-  background: rgba(255,255,255,0.02);
-  border: 1px solid var(--border);
+  width: 100%;
+  height: 78vh;
   overflow: hidden;
   cursor: crosshair;
-  transition: border-color 0.3s, box-shadow 0.3s;
-  aspect-ratio: 3/4;
-  transform-style: preserve-3d;
-  will-change: transform;
+  border-top: 1px solid var(--border);
 }
-.vault-cell--spectrum { aspect-ratio: unset; min-height: 360px; }
 
-.vault-cell:hover {
-  border-color: rgba(255,255,255,0.2);
-  box-shadow: 0 0 40px var(--cell-glow, rgba(45,212,127,0.1));
+.cw-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.9s ease;
 }
-.vault-cell--spectrum:hover {
-  box-shadow:
-    0 0 50px rgba(45,212,127,0.12),
-    0 0 50px rgba(58,171,209,0.08),
-    0 0 50px rgba(168,94,212,0.08);
-}
-.vault-cell:hover .vault-arc svg { transform: rotate(180deg); }
+.cw-slide.active { opacity: 1; }
 
-/* [X] corner markers */
-.vault-corners { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.cw-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* Corner markers on stage */
+.cw-corners { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
 
 .corner {
   position: absolute;
@@ -819,87 +799,100 @@ body::before {
 .corner-bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
 .corner-br { bottom: 8px; right: 8px; transform: scale(-1); }
 
-/* Targeting arc */
-.vault-arc {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+/* Info + progress bar below stage */
+.cw-bar {
   display: flex;
   align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-.vault-arc svg {
-  width: 65%;
-  height: 65%;
-  transition: transform 0.9s ease;
+  gap: 32px;
+  padding: 18px 60px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(4,4,6,0.92);
 }
 
-/* Product image in vault */
-.vault-img-wrap {
-  position: absolute;
-  inset: 0;
+.cw-bar-left {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-}
-.vault-img-wrap img {
-  width: 80%;
-  height: 80%;
-  object-fit: contain;
-  transition: transform 0.5s ease;
-}
-.vault-cell:hover .vault-img-wrap img { transform: scale(1.05); }
-
-.vault-swatch-bg {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-}
-.vault-swatch-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--sw, rgba(255,255,255,0.03));
-  opacity: 0.05;
-}
-.vault-swatch-bg--spectrum {
-  background: linear-gradient(135deg, rgba(45,212,127,0.08), rgba(58,171,209,0.08), rgba(168,94,212,0.08));
+  align-items: baseline;
+  gap: 16px;
+  min-width: 200px;
 }
 
-/* Vault cell info overlay */
-.vault-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 16px 20px;
-  background: linear-gradient(to top, rgba(4,4,6,0.95) 0%, rgba(4,4,6,0.6) 60%, transparent 100%);
-  transform: translateY(100%);
-  transition: transform 0.3s ease;
-  z-index: 4;
-}
-.vault-cell:hover .vault-info { transform: translateY(0); }
-
-.vault-name {
-  font-size: 12px;
+.cw-showcase-name {
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  margin-bottom: 4px;
+  transition: color 0.4s;
 }
-.vault-price {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--em);
-  letter-spacing: 0.05em;
-}
-.vault-badge {
-  font-size: 9px;
-  letter-spacing: 0.15em;
+
+.cw-showcase-price {
+  font-size: 11px;
+  letter-spacing: 0.1em;
   color: var(--muted);
-  margin-top: 4px;
+}
+
+/* Progress indicators */
+.cw-indicators {
+  display: flex;
+  gap: 6px;
+  flex: 1;
+}
+
+.cw-indicator {
+  flex: 1;
+  height: 2px;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  padding: 6px 0;
+  background-clip: content-box;
+  position: relative;
+  cursor: crosshair;
+  overflow: hidden;
+}
+.cw-indicator::after {
+  content: '';
+  position: absolute;
+  top: 6px; bottom: 6px; left: 0;
+  width: 100%;
+  background: var(--em);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.cw-indicator.playing::after {
+  transform: scaleX(1);
+  transition: transform 3.5s linear;
+}
+.cw-indicator.done::after {
+  transform: scaleX(1);
+  transition: none;
+}
+
+/* CTA */
+.cw-bar-cta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--em);
+  background: transparent;
+  border: 1px solid var(--em);
+  padding: 10px 22px;
+  cursor: crosshair;
+  transition: box-shadow 0.3s, background 0.3s;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.cw-bar-cta:hover {
+  box-shadow: 0 0 24px var(--glow-em);
+  background: rgba(45,212,127,0.04);
+}
+
+@media (max-width: 800px) {
+  .vault-header { padding: 0 20px; }
+  .cw-stage { height: 65vh; }
+  .cw-bar { padding: 14px 20px; gap: 16px; flex-wrap: wrap; }
+  .cw-bar-left { min-width: auto; width: 100%; }
+  .cw-indicators { order: -1; width: 100%; }
 }
 
 /* ================================================================
