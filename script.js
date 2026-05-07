@@ -137,12 +137,64 @@
 
 
 /* ================================================================
+   HERO TITLE CIPHER SCRAMBLE
+   ================================================================ */
+(function () {
+  var CHARSET  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*?><:/\\|[]{}';
+  var TARGET   = 'CODED';
+  var CYCLES   = 10;
+  var INTERVAL = 55;
+  var STAGGER  = 75;
+  var titleEl  = document.getElementById('heroTitle');
+
+  function buildSpans() {
+    if (titleEl.querySelector('.hero-char')) return;
+    titleEl.innerHTML =
+      TARGET.split('').map(function (c) {
+        return '<span class="hero-char" data-char="' + c + '">_</span>';
+      }).join('') +
+      '<span class="hero-cursor">_</span>';
+  }
+
+  function scramble() {
+    var chars = titleEl.querySelectorAll('.hero-char');
+    chars.forEach(function (el, i) {
+      el.textContent = '_';
+      var count = 0;
+      setTimeout(function () {
+        var iv = setInterval(function () {
+          if (count >= CYCLES) {
+            clearInterval(iv);
+            el.textContent = el.dataset.char;
+            return;
+          }
+          el.textContent = CHARSET[Math.floor(Math.random() * CHARSET.length)];
+          count++;
+        }, INTERVAL);
+      }, i * STAGGER);
+    });
+  }
+
+  window._heroScramble = function () {
+    buildSpans();
+    scramble();
+  };
+})();
+
+/* ================================================================
    SCROLL REVEAL
    ================================================================ */
 function revealHeroContent() {
   document.querySelectorAll('.hero-section .reveal').forEach(function (el, i) {
     setTimeout(function () { el.classList.add('in-view'); }, i * 120);
   });
+  /* Run cipher scramble on title once hero is visible, then every 12s */
+  setTimeout(function () {
+    if (window._heroScramble) window._heroScramble();
+    setInterval(function () {
+      if (window._heroScramble) window._heroScramble();
+    }, 12000);
+  }, 300);
 }
 
 var revealObserver = new IntersectionObserver(function (entries) {

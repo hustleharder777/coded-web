@@ -266,30 +266,23 @@ body::before {
   line-height: 0.9;
   margin-bottom: 32px;
   text-transform: uppercase;
-  animation: heroGlitch 9s infinite;
   transition-delay: 0.2s;
 }
 
-/* Blinking terminal cursor after title */
-.hero-title::after {
-  content: '_';
+/* Blinking terminal cursor — appended by JS after scramble settles */
+.hero-cursor {
   color: var(--em);
   font-weight: 400;
   animation: termCursor 1.1s step-end infinite;
-  margin-left: 0.05em;
+  margin-left: 0.04em;
 }
 @keyframes termCursor {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0; }
 }
 
-@keyframes heroGlitch {
-  0%, 91%, 100% { transform: none; text-shadow: none; }
-  92%  { transform: translateX(-4px); text-shadow: 3px 0 var(--teal), -3px 0 var(--violet); clip-path: inset(10% 0 80% 0); }
-  93%  { transform: translateX(4px) skewX(-2deg); text-shadow: -3px 0 var(--em); clip-path: inset(60% 0 10% 0); }
-  94%  { transform: translateX(-2px); text-shadow: 2px 0 var(--teal); clip-path: inset(30% 0 50% 0); }
-  95%  { transform: none; text-shadow: none; clip-path: none; }
-}
+/* Individual scramble chars inherit title style */
+.hero-char { display: inline-block; }
 
 .hero-subtitle {
   font-size: 11px;
