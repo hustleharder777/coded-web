@@ -3,6 +3,18 @@
    ============================================================ */
 
 /* ================================================================
+   VAULT.HTML PAGE FADE-IN
+   ================================================================ */
+(function () {
+  if (!document.getElementById('brandHero')) return;
+  /* Body starts at opacity:0 (set inline in vault.html head).
+     Adding page-ready triggers the CSS transition to opacity:1. */
+  setTimeout(function () {
+    document.body.classList.add('page-ready');
+  }, 60);
+})();
+
+/* ================================================================
    2D TERMINAL RAIN
    ================================================================ */
 (function () {
@@ -150,18 +162,12 @@
         clearInterval(iv);
         btn.textContent = '[VAULT_OPEN...]';
 
-        /* 2. Brief pause then slide screen up */
+        /* 2. Brief pause then fade out and navigate to vault.html */
         setTimeout(function () {
-          screen.classList.add('open');
-
-          /* 3. After door finishes, hide and cascade-reveal vault cells */
+          document.body.classList.add('page-exit');
           setTimeout(function () {
-            screen.style.visibility = 'hidden';
-            var cells = document.querySelectorAll('#vault .reveal, #vault .vault-header');
-            cells.forEach(function (el, i) {
-              setTimeout(function () { el.classList.add('in-view'); }, i * 90);
-            });
-          }, 780);
+            window.location.href = 'vault.html';
+          }, 450);
         }, 280);
       }
     }, 60);
