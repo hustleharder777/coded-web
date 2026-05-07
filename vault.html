@@ -25,7 +25,7 @@
       <div class="nav-links">
         <a href="#product" class="nav-link">[SHOP]</a>
         <a href="#vault" class="nav-link">[VAULT]</a>
-        <a href="#footer" class="nav-link">[ZÜRICH]</a>
+        <a href="about.html" class="nav-link">[ABOUT]</a>
       </div>
       <div class="nav-right">
         <span class="nav-live"><span class="live-dot"></span>LIVE</span>
@@ -181,6 +181,36 @@
     </div>
   </section>
 
+  <!-- Lookbook / Editorial -->
+  <section class="lookbook-section" id="lookbook">
+    <div class="lookbook-header reveal">
+      <span class="lookbook-label">[EDITORIAL]</span>
+      <span class="lookbook-meta">— SS25 — ZÜRICH —</span>
+    </div>
+    <div class="lookbook-grid">
+      <div class="lookbook-item lookbook-wide reveal">
+        <img src="assets/campaign-aurora.jpg" alt="" onerror="this.style.display='none'">
+        <div class="lookbook-slot-label">[PHOTO_01]</div>
+        <div class="lookbook-caption">01 / ZÜRICH</div>
+      </div>
+      <div class="lookbook-item lookbook-portrait reveal">
+        <img src="assets/campaign-london.jpg" alt="" onerror="this.style.display='none'">
+        <div class="lookbook-slot-label">[PHOTO_02]</div>
+        <div class="lookbook-caption">02 / LONDON</div>
+      </div>
+      <div class="lookbook-item lookbook-portrait reveal">
+        <img src="assets/campaign-roman.jpg" alt="" onerror="this.style.display='none'">
+        <div class="lookbook-slot-label">[PHOTO_03]</div>
+        <div class="lookbook-caption">03 / ROME</div>
+      </div>
+      <div class="lookbook-item lookbook-wide reveal">
+        <img src="assets/product-studio.jpg" alt="" onerror="this.style.display='none'">
+        <div class="lookbook-slot-label">[PHOTO_04]</div>
+        <div class="lookbook-caption">04 / STUDIO</div>
+      </div>
+    </div>
+  </section>
+
   <!-- Scrolling Ticker -->
   <div class="ticker" aria-hidden="true">
     <div class="ticker-track">
@@ -215,7 +245,7 @@
       <div class="footer-nav reveal">
         <a href="#product" class="footer-link">[SHOP]</a>
         <a href="#vault" class="footer-link">[VAULT]</a>
-        <a href="#" class="footer-link">[ZÜRICH]</a>
+        <a href="about.html" class="footer-link">[ABOUT]</a>
         <a href="#" class="footer-link">[ARCHIVE]</a>
       </div>
       <div class="footer-newsletter reveal">
@@ -230,6 +260,23 @@
   </footer>
 
   </div><!-- /.vault-content -->
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-drawer-inner">
+      <div class="cart-drawer-header">
+        <span class="cart-drawer-title">[CART]</span>
+        <button class="cart-drawer-close" id="cartClose">[×_CLOSE]</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-drawer-footer">
+        <p class="cart-empty-msg" id="cartEmpty">[CART_EMPTY]</p>
+        <div class="cart-total" id="cartTotal"></div>
+        <button class="cart-checkout-btn" id="cartCheckoutBtn">[PROCEED_TO_CHECKOUT]</button>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

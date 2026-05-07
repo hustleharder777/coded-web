@@ -366,24 +366,116 @@ if (productImgWrap) {
 
 
 /* ================================================================
-   BUY NOW
+   CART
    ================================================================ */
+var cart = [];
+
+function cartOpen() {
+  var el = document.getElementById('cartDrawer');
+  if (!el) return;
+  el.classList.add('open');
+  el.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+function cartClose() {
+  var el = document.getElementById('cartDrawer');
+  if (!el) return;
+  el.classList.remove('open');
+  el.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+function cartRender() {
+  var itemsEl  = document.getElementById('cartItems');
+  var totalEl  = document.getElementById('cartTotal');
+  var emptyEl  = document.getElementById('cartEmpty');
+  var checkEl  = document.getElementById('cartCheckoutBtn');
+  var navCart  = document.querySelector('.nav-cart');
+  if (!itemsEl) return;
+
+  var totalQty = cart.reduce(function(s, i) { return s + i.qty; }, 0);
+  if (navCart) navCart.textContent = '[CART_' + (totalQty < 10 ? '0' : '') + totalQty + ']';
+
+  if (cart.length === 0) {
+    itemsEl.innerHTML = '';
+    if (emptyEl)  { emptyEl.style.display  = 'block'; }
+    if (totalEl)  { totalEl.style.display  = 'none'; }
+    if (checkEl)  { checkEl.style.display  = 'none'; }
+    return;
+  }
+  if (emptyEl) emptyEl.style.display = 'none';
+  if (totalEl) totalEl.style.display = 'flex';
+  if (checkEl) checkEl.style.display = 'block';
+
+  itemsEl.innerHTML = cart.map(function(item, idx) {
+    return '<div class="cart-item">' +
+      '<div class="cart-item-info">' +
+        '<div class="cart-item-name">' + item.name + '</div>' +
+        '<div class="cart-item-meta">' + item.colorway + ' &nbsp;·&nbsp; SIZE_' + item.size + '</div>' +
+      '</div>' +
+      '<div class="cart-item-right">' +
+        '<div class="cart-item-price">CHF ' + (item.price * item.qty) + '</div>' +
+        '<div class="cart-item-qty">' +
+          '<button class="qty-btn" onclick="cartChangeQty(' + idx + ',-1)">−</button>' +
+          '<span class="qty-val">' + item.qty + '</span>' +
+          '<button class="qty-btn" onclick="cartChangeQty(' + idx + ',1)">+</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  var total = cart.reduce(function(s, i) { return s + i.price * i.qty; }, 0);
+  if (totalEl) totalEl.innerHTML = '<span>TOTAL</span><span>CHF ' + total + '</span>';
+}
+function cartChangeQty(idx, delta) {
+  cart[idx].qty += delta;
+  if (cart[idx].qty <= 0) cart.splice(idx, 1);
+  cartRender();
+}
+function cartAddItem() {
+  var cwEl   = document.querySelector('.cw-swatch.active');
+  var sizeEl = document.querySelector('.size-btn.active');
+  var cw     = cwEl   ? cwEl.dataset.cw   : 'spectrum';
+  var size   = sizeEl ? sizeEl.textContent : 'M';
+  var price  = cw === 'spectrum' ? 320 : 285;
+  for (var i = 0; i < cart.length; i++) {
+    if (cart[i].colorway === cw.toUpperCase() && cart[i].size === size) {
+      cart[i].qty++;
+      cartRender();
+      cartOpen();
+      return;
+    }
+  }
+  cart.push({ name: 'CODED TRACKSUIT', colorway: cw.toUpperCase(), size: size, price: price, qty: 1 });
+  cartRender();
+  cartOpen();
+}
+
 (function () {
-  var buyBtn = document.getElementById('buyBtn');
-  if (!buyBtn) return;
-  buyBtn.addEventListener('click', function () {
-    var orig = buyBtn.textContent;
-    buyBtn.textContent = '[ADDED_TO_CART]';
-    buyBtn.style.borderColor = '#2dd47f';
-    buyBtn.style.color = '#2dd47f';
-    buyBtn.style.boxShadow = '0 0 24px rgba(45,212,127,0.2)';
-    setTimeout(function () {
-      buyBtn.textContent = orig;
-      buyBtn.style.borderColor = '';
-      buyBtn.style.color = '';
-      buyBtn.style.boxShadow = '';
-    }, 2000);
-  });
+  var buyBtn  = document.getElementById('buyBtn');
+  var navCart = document.querySelector('.nav-cart');
+  var closeBtn = document.getElementById('cartClose');
+  var overlay  = document.getElementById('cartOverlay');
+
+  if (buyBtn) {
+    buyBtn.addEventListener('click', function () {
+      cartAddItem();
+      buyBtn.textContent = '[ADDED_TO_CART]';
+      buyBtn.style.borderColor = '#2dd47f';
+      buyBtn.style.color = '#2dd47f';
+      buyBtn.style.boxShadow = '0 0 24px rgba(45,212,127,0.2)';
+      setTimeout(function () {
+        buyBtn.textContent = '[BUY NOW]';
+        buyBtn.style.borderColor = '';
+        buyBtn.style.color = '';
+        buyBtn.style.boxShadow = '';
+      }, 1800);
+    });
+  }
+  if (navCart) navCart.addEventListener('click', function(e) { e.preventDefault(); cartOpen(); });
+  if (closeBtn) closeBtn.addEventListener('click', cartClose);
+  if (overlay)  overlay.addEventListener('click', cartClose);
+
+  cartRender();
 })();
 
 
