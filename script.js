@@ -126,10 +126,8 @@
       setTimeout(function () {
         loader.classList.add('fade-out');
         document.body.style.overflow = '';
-        setTimeout(function () {
-          window.location.href = 'vault.html';
-        }, 650);
-      }, 500);
+        window.location.href = 'vault.html';
+      }, 400);
     }, wait);
   }
 
