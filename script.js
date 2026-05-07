@@ -99,6 +99,8 @@
   var cipherEl   = document.getElementById('loaderCipher');
   var CIPHER_LEN = 12;
 
+  if (!loader || !cipherEl) return;
+
   document.body.style.overflow = 'hidden';
 
   function randCipherStr(len) {
