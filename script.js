@@ -236,9 +236,9 @@ if (productImgWrap) {
    ================================================================ */
 (function () {
   var imageMap = {
-    hoodie:  { spectrum: 'assets/product-studio.jpg', emerald: 'assets/product-studio.jpg', teal: 'assets/product-studio.jpg', violet: 'assets/product-studio.jpg', cream: 'assets/product-studio.jpg' },
-    joggers: { spectrum: 'assets/product-studio.jpg', emerald: 'assets/product-studio.jpg', teal: 'assets/product-studio.jpg', violet: 'assets/product-studio.jpg', cream: 'assets/product-studio.jpg' },
-    set:     { spectrum: 'assets/product-studio.jpg', emerald: 'assets/product-studio.jpg', teal: 'assets/product-studio.jpg', violet: 'assets/product-studio.jpg', cream: 'assets/product-studio.jpg' },
+    hoodie:  { spectrum: 'assets/product-hoodie-a.jpg', emerald: 'assets/product-hoodie-a.jpg', teal: 'assets/product-hoodie-a.jpg', violet: 'assets/product-hoodie-b.jpg', cream: 'assets/product-hoodie-a.jpg' },
+    joggers: { spectrum: 'assets/product-hoodie-b.jpg', emerald: 'assets/product-hoodie-b.jpg', teal: 'assets/product-hoodie-b.jpg', violet: 'assets/product-hoodie-b.jpg', cream: 'assets/product-hoodie-b.jpg' },
+    set:     { spectrum: 'assets/product-studio.jpg',   emerald: 'assets/product-studio.jpg',   teal: 'assets/product-studio.jpg',   violet: 'assets/product-studio.jpg',   cream: 'assets/product-studio.jpg'   },
   };
 
   var activePiece = 'hoodie';
