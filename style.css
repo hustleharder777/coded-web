@@ -885,6 +885,8 @@ body::before {
 
 @media (max-width: 800px) {
   .vault-header { padding: 0 20px; }
+  .vault-header { padding: 20px 20px; }
+  .vault-meta { font-size: 9px; letter-spacing: 0.12em; white-space: nowrap; }
   .cw-stage { height: 65vh; }
   .cw-bar { padding: 14px 20px; gap: 16px; flex-wrap: wrap; }
   .cw-bar-left { min-width: auto; width: 100%; }
