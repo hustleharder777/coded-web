@@ -25,7 +25,7 @@
   <!-- Nav -->
   <nav class="nav" id="nav">
     <div class="nav-inner">
-      <a href="#hero" class="nav-logo">CODED</a>
+      <a href="#" class="nav-logo">CODED</a>
       <div class="nav-links">
         <a href="#product" class="nav-link">[SHOP]</a>
         <a href="#vault" class="nav-link">[VAULT]</a>
@@ -38,122 +38,14 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="hero-section" id="hero">
-    <div class="hero-inner">
-      <div class="hero-eyebrow reveal">[ZÜRICH_SS25 — REF CX-001]</div>
-      <h1 class="hero-title reveal" id="heroTitle">CODED</h1>
-      <div class="hero-subtitle reveal">300 ARTIFACTS. NO RESTOCK. WORN EVERYWHERE.</div>
-      <a href="#product" class="hero-cta reveal">[ENTER THE VAULT]</a>
-    </div>
-    <div class="hero-scroll-hint" aria-hidden="true">
-      <span class="scroll-line"></span>
-      <span class="scroll-label">SCROLL</span>
+  <!-- Entry Screen -->
+  <section class="entry-screen" id="entryScreen">
+    <div class="entry-inner">
+      <button class="vault-enter" id="vaultEnter">[ENTER THE VAULT<span class="entry-cursor">_</span>]</button>
     </div>
   </section>
 
-  <!-- Product Detail Section -->
-  <section class="product-section" id="product">
-    <div class="product-grid">
-
-      <!-- Left: Info -->
-      <div class="product-info reveal">
-        <div class="product-ref">REF — CX-001-SS25</div>
-        <h1 class="product-name">CODED<br>TRACKSUIT</h1>
-        <div class="product-divider"></div>
-
-        <div class="product-price-block">
-          <div class="product-price">CHF <span class="price-em">285</span></div>
-          <div class="product-price-note">SPECTRUM EDITION — <span class="price-em">CHF 320</span></div>
-        </div>
-
-        <p class="product-desc">
-          The word CODED repeating along curving seam lines across the hoodie and joggers. Heavyweight cotton fleece. Dropped shoulders. Oversized fit.<br><br>
-          <span class="product-meta">Made in Portugal &nbsp;·&nbsp; 300 pieces &nbsp;·&nbsp; No restock.</span>
-        </p>
-
-        <div class="size-block">
-          <div class="size-label">SIZE</div>
-          <div class="size-grid">
-            <button class="size-btn">XS</button>
-            <button class="size-btn">S</button>
-            <button class="size-btn active">M</button>
-            <button class="size-btn">L</button>
-            <button class="size-btn sold-out" disabled title="Sold out">XL</button>
-          </div>
-        </div>
-
-        <button class="buy-btn" id="buyBtn">[BUY NOW]</button>
-
-        <div class="product-tags">
-          <span class="tag">[ZÜRICH_SS25]</span>
-          <span class="tag">[MFD_PRT]</span>
-          <span class="tag">[ED_300]</span>
-          <span class="tag">[SOLD_AS_SET]</span>
-        </div>
-      </div>
-
-      <!-- Right: Visual -->
-      <div class="product-visual reveal">
-        <div class="product-watermark" aria-hidden="true">CODED TRACKSUIT</div>
-        <div class="product-img-wrap scan-overlay" id="productImgWrap">
-          <img
-            src="assets/image.png"
-            alt="Coded Tracksuit"
-            class="product-img"
-            id="productImg"
-            onerror="this.classList.add('img-missing')"
-          >
-        </div>
-        <div class="piece-switcher">
-          <button class="piece-btn active" data-piece="hoodie">[HOODIE]</button>
-          <button class="piece-btn" data-piece="joggers">[JOGGERS]</button>
-          <button class="piece-btn" data-piece="set">[SET]</button>
-        </div>
-        <div class="colorway-switcher">
-          <button class="cw-swatch active" data-cw="spectrum" title="Spectrum" aria-label="Spectrum colorway">
-            <span class="cw-swatch-inner cw-spectrum"></span>
-          </button>
-          <button class="cw-swatch" data-cw="emerald" title="Emerald" aria-label="Emerald colorway">
-            <span class="cw-swatch-inner" style="background:#2dd47f"></span>
-          </button>
-          <button class="cw-swatch" data-cw="teal" title="Teal" aria-label="Teal colorway">
-            <span class="cw-swatch-inner" style="background:#3aabd1"></span>
-          </button>
-          <button class="cw-swatch" data-cw="violet" title="Violet" aria-label="Violet colorway">
-            <span class="cw-swatch-inner" style="background:#a85ed4"></span>
-          </button>
-          <button class="cw-swatch" data-cw="cream" title="Cream" aria-label="Cream colorway">
-            <span class="cw-swatch-inner" style="background:#f0ebd8"></span>
-          </button>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Barcode Strip -->
-  <div class="barcode-strip">
-    <div class="barcode-visual" aria-hidden="true"></div>
-    <div class="barcode-text">CX-001-SS25 &nbsp;|&nbsp; ZÜRICH &nbsp;|&nbsp; MFD_PRT &nbsp;|&nbsp; ED_300 &nbsp;|&nbsp; SS25 &nbsp;|&nbsp; 300_UNITS &nbsp;|&nbsp; NO_RESTOCK &nbsp;|&nbsp; SOLD_AS_SET &nbsp;|&nbsp; CHF_285</div>
-  </div>
-
-  <!-- Campaign Photo Strip -->
-  <div class="campaign-strip" id="campaignStrip">
-    <div class="campaign-track" id="campaignTrack">
-      <div class="campaign-item campaign-wide">
-        <img src="assets/image.jpeg" alt="CODED — Command Campaign" draggable="false" onerror="this.parentElement.classList.add('img-missing')">
-      </div>
-      <div class="campaign-item campaign-portrait">
-        <img src="assets/image.png" alt="CODED — London Night" draggable="false" onerror="this.parentElement.classList.add('img-missing')">
-      </div>
-      <div class="campaign-item campaign-portrait">
-        <img src="assets/image.jpeg" alt="CODED — London Day" draggable="false" onerror="this.parentElement.classList.add('img-missing')">
-      </div>
-    </div>
-  </div>
-
-  <!-- Vault Grid -->
+  <!-- Vault Grid (first section after entry) -->
   <section class="vault-section" id="vault">
     <div class="vault-header reveal">
       <span class="vault-label">[VAULT]</span>
@@ -280,6 +172,107 @@
 
     </div>
   </section>
+
+  <!-- Barcode Strip -->
+  <div class="barcode-strip">
+    <div class="barcode-visual" aria-hidden="true"></div>
+    <div class="barcode-text">CX-001-SS25 &nbsp;|&nbsp; ZÜRICH &nbsp;|&nbsp; MFD_PRT &nbsp;|&nbsp; ED_300 &nbsp;|&nbsp; SS25 &nbsp;|&nbsp; 300_UNITS &nbsp;|&nbsp; NO_RESTOCK &nbsp;|&nbsp; SOLD_AS_SET &nbsp;|&nbsp; CHF_285</div>
+  </div>
+
+  <!-- Product Detail Section -->
+  <section class="product-section" id="product">
+    <div class="product-grid">
+
+      <!-- Left: Info -->
+      <div class="product-info reveal">
+        <div class="product-ref">REF — CX-001-SS25</div>
+        <h1 class="product-name">CODED<br>TRACKSUIT</h1>
+        <div class="product-divider"></div>
+
+        <div class="product-price-block">
+          <div class="product-price">CHF <span class="price-em">285</span></div>
+          <div class="product-price-note">SPECTRUM EDITION — <span class="price-em">CHF 320</span></div>
+        </div>
+
+        <p class="product-desc">
+          The word CODED repeating along curving seam lines across the hoodie and joggers. Heavyweight cotton fleece. Dropped shoulders. Oversized fit.<br><br>
+          <span class="product-meta">Made in Portugal &nbsp;·&nbsp; 300 pieces &nbsp;·&nbsp; No restock.</span>
+        </p>
+
+        <div class="size-block">
+          <div class="size-label">SIZE</div>
+          <div class="size-grid">
+            <button class="size-btn">XS</button>
+            <button class="size-btn">S</button>
+            <button class="size-btn active">M</button>
+            <button class="size-btn">L</button>
+            <button class="size-btn sold-out" disabled title="Sold out">XL</button>
+          </div>
+        </div>
+
+        <button class="buy-btn" id="buyBtn">[BUY NOW]</button>
+
+        <div class="product-tags">
+          <span class="tag">[ZÜRICH_SS25]</span>
+          <span class="tag">[MFD_PRT]</span>
+          <span class="tag">[ED_300]</span>
+          <span class="tag">[SOLD_AS_SET]</span>
+        </div>
+      </div>
+
+      <!-- Right: Visual -->
+      <div class="product-visual reveal">
+        <div class="product-watermark" aria-hidden="true">CODED TRACKSUIT</div>
+        <div class="product-img-wrap scan-overlay" id="productImgWrap">
+          <img
+            src="assets/image.png"
+            alt="Coded Tracksuit"
+            class="product-img"
+            id="productImg"
+            onerror="this.classList.add('img-missing')"
+          >
+        </div>
+        <div class="piece-switcher">
+          <button class="piece-btn active" data-piece="hoodie">[HOODIE]</button>
+          <button class="piece-btn" data-piece="joggers">[JOGGERS]</button>
+          <button class="piece-btn" data-piece="set">[SET]</button>
+        </div>
+        <div class="colorway-switcher">
+          <button class="cw-swatch active" data-cw="spectrum" title="Spectrum" aria-label="Spectrum colorway">
+            <span class="cw-swatch-inner cw-spectrum"></span>
+          </button>
+          <button class="cw-swatch" data-cw="emerald" title="Emerald" aria-label="Emerald colorway">
+            <span class="cw-swatch-inner" style="background:#2dd47f"></span>
+          </button>
+          <button class="cw-swatch" data-cw="teal" title="Teal" aria-label="Teal colorway">
+            <span class="cw-swatch-inner" style="background:#3aabd1"></span>
+          </button>
+          <button class="cw-swatch" data-cw="violet" title="Violet" aria-label="Violet colorway">
+            <span class="cw-swatch-inner" style="background:#a85ed4"></span>
+          </button>
+          <button class="cw-swatch" data-cw="cream" title="Cream" aria-label="Cream colorway">
+            <span class="cw-swatch-inner" style="background:#f0ebd8"></span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Campaign Photo Strip -->
+  <div class="campaign-strip" id="campaignStrip">
+    <div class="campaign-track" id="campaignTrack">
+      <div class="campaign-item campaign-wide">
+        <img src="assets/image.jpeg" alt="CODED — Command Campaign" draggable="false" onerror="this.parentElement.classList.add('img-missing')">
+      </div>
+      <div class="campaign-item campaign-portrait">
+        <img src="assets/image.png" alt="CODED — London Night" draggable="false" onerror="this.parentElement.classList.add('img-missing')">
+      </div>
+      <div class="campaign-item campaign-portrait">
+        <img src="assets/image.jpeg" alt="CODED — London Day" draggable="false" onerror="this.parentElement.classList.add('img-missing')">
+      </div>
+    </div>
+  </div>
 
   <!-- Scrolling Ticker -->
   <div class="ticker" aria-hidden="true">

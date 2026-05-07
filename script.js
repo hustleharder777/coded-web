@@ -82,49 +82,40 @@
    PIXELVAULT-STYLE LOADER
    ================================================================ */
 (function () {
-  const CHARSET    = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*?><:/\\|[]{}';
-  const loader     = document.getElementById('loader');
-  const cipherEl   = document.getElementById('loaderCipher');
-  const CIPHER_LEN = 12;
+  var CHARSET    = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*?><:/\\|[]{}';
+  var loader     = document.getElementById('loader');
+  var cipherEl   = document.getElementById('loaderCipher');
+  var CIPHER_LEN = 12;
 
   document.body.style.overflow = 'hidden';
 
-  function randChar() {
-    return CHARSET[Math.floor(Math.random() * CHARSET.length)];
-  }
   function randCipherStr(len) {
-    let s = '[';
-    for (let i = 0; i < len; i++) s += randChar();
+    var s = '[';
+    for (var i = 0; i < len; i++) s += CHARSET[Math.floor(Math.random() * CHARSET.length)];
     return s + ']';
   }
 
-  let scrambleIv = setInterval(() => {
+  var scrambleIv = setInterval(function () {
     cipherEl.textContent = randCipherStr(CIPHER_LEN);
   }, 80);
 
-  const MIN_LOAD_MS = 1800;
-  const start = performance.now();
+  var MIN_LOAD_MS = 1800;
+  var start = performance.now();
 
   function onReady() {
-    const wait = Math.max(0, MIN_LOAD_MS - (performance.now() - start));
-    setTimeout(() => {
-      /* Resolve cipher */
-      setTimeout(() => {
-        clearInterval(scrambleIv);
-        cipherEl.textContent = '[ACCESS_GRANTED]';
-        cipherEl.classList.add('resolved');
-      }, 0);
+    var wait = Math.max(0, MIN_LOAD_MS - (performance.now() - start));
+    setTimeout(function () {
+      clearInterval(scrambleIv);
+      cipherEl.textContent = '[ACCESS_GRANTED]';
+      cipherEl.classList.add('resolved');
 
-      /* Fade loader */
-      setTimeout(() => {
+      setTimeout(function () {
         loader.classList.add('fade-out');
         document.body.style.overflow = '';
-        setTimeout(() => {
+        setTimeout(function () {
           loader.classList.add('hidden');
-          revealHeroContent();
         }, 650);
       }, 500);
-
     }, wait);
   }
 
@@ -137,66 +128,50 @@
 
 
 /* ================================================================
-   HERO TITLE CIPHER SCRAMBLE
+   VAULT ENTER — door transition
    ================================================================ */
 (function () {
-  var CHARSET  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*?><:/\\|[]{}';
-  var TARGET   = 'CODED';
-  var CYCLES   = 10;
-  var INTERVAL = 55;
-  var STAGGER  = 75;
-  var titleEl  = document.getElementById('heroTitle');
+  var CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*?><:/\\|[]{}';
+  var btn     = document.getElementById('vaultEnter');
+  var screen  = document.getElementById('entryScreen');
+  if (!btn || !screen) return;
 
-  function buildSpans() {
-    if (titleEl.querySelector('.hero-char')) return;
-    titleEl.innerHTML =
-      TARGET.split('').map(function (c) {
-        return '<span class="hero-char" data-char="' + c + '">_</span>';
-      }).join('') +
-      '<span class="hero-cursor">_</span>';
-  }
+  btn.addEventListener('click', function () {
+    btn.style.pointerEvents = 'none';
 
-  function scramble() {
-    var chars = titleEl.querySelectorAll('.hero-char');
-    chars.forEach(function (el, i) {
-      el.textContent = '_';
-      var count = 0;
-      setTimeout(function () {
-        var iv = setInterval(function () {
-          if (count >= CYCLES) {
-            clearInterval(iv);
-            el.textContent = el.dataset.char;
-            return;
-          }
-          el.textContent = CHARSET[Math.floor(Math.random() * CHARSET.length)];
-          count++;
-        }, INTERVAL);
-      }, i * STAGGER);
-    });
-  }
+    /* 1. Scramble button text */
+    var scrambles = 0;
+    var iv = setInterval(function () {
+      var r = '[';
+      for (var i = 0; i < 11; i++) r += CHARSET[Math.floor(Math.random() * CHARSET.length)];
+      r += ']';
+      btn.textContent = r;
+      if (++scrambles >= 8) {
+        clearInterval(iv);
+        btn.textContent = '[VAULT_OPEN...]';
 
-  window._heroScramble = function () {
-    buildSpans();
-    scramble();
-  };
+        /* 2. Brief pause then slide screen up */
+        setTimeout(function () {
+          screen.classList.add('open');
+
+          /* 3. After door finishes, hide and cascade-reveal vault cells */
+          setTimeout(function () {
+            screen.style.visibility = 'hidden';
+            var cells = document.querySelectorAll('#vault .reveal, #vault .vault-header');
+            cells.forEach(function (el, i) {
+              setTimeout(function () { el.classList.add('in-view'); }, i * 90);
+            });
+          }, 780);
+        }, 280);
+      }
+    }, 60);
+  });
 })();
+
 
 /* ================================================================
    SCROLL REVEAL
    ================================================================ */
-function revealHeroContent() {
-  document.querySelectorAll('.hero-section .reveal').forEach(function (el, i) {
-    setTimeout(function () { el.classList.add('in-view'); }, i * 120);
-  });
-  /* Run cipher scramble on title once hero is visible, then every 12s */
-  setTimeout(function () {
-    if (window._heroScramble) window._heroScramble();
-    setInterval(function () {
-      if (window._heroScramble) window._heroScramble();
-    }, 12000);
-  }, 300);
-}
-
 var revealObserver = new IntersectionObserver(function (entries) {
   entries.forEach(function (e) {
     if (e.isIntersecting) {
@@ -207,7 +182,7 @@ var revealObserver = new IntersectionObserver(function (entries) {
 }, { threshold: 0.12 });
 
 document.querySelectorAll('.reveal').forEach(function (el) {
-  if (!el.closest('.hero-section')) revealObserver.observe(el);
+  revealObserver.observe(el);
 });
 
 
