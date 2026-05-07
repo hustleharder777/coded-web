@@ -49,12 +49,18 @@
 
   <div class="vault-content">
 
-  <!-- Vault Grid -->
-  <section class="vault-section" id="vault">
-    <div class="vault-header reveal">
-      <span class="vault-label">[VAULT]</span>
-      <span class="vault-meta">— 5 COLORWAYS — 300 UNITS —</span>
+  <!-- Hype Ticker -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>CODED TRACKSUIT &nbsp;— CHF 285 —&nbsp; ZÜRICH SS25 &nbsp;— 300 PIECES —&nbsp; NO RESTOCK &nbsp;— MADE IN PORTUGAL —&nbsp; SOLD AS SET &nbsp;— CODED &nbsp;— </span>
+      <span>CODED TRACKSUIT &nbsp;— CHF 285 —&nbsp; ZÜRICH SS25 &nbsp;— 300 PIECES —&nbsp; NO RESTOCK &nbsp;— MADE IN PORTUGAL —&nbsp; SOLD AS SET &nbsp;— CODED &nbsp;— </span>
+      <span>CODED TRACKSUIT &nbsp;— CHF 285 —&nbsp; ZÜRICH SS25 &nbsp;— 300 PIECES —&nbsp; NO RESTOCK &nbsp;— MADE IN PORTUGAL —&nbsp; SOLD AS SET &nbsp;— CODED &nbsp;— </span>
+      <span>CODED TRACKSUIT &nbsp;— CHF 285 —&nbsp; ZÜRICH SS25 &nbsp;— 300 PIECES —&nbsp; NO RESTOCK &nbsp;— MADE IN PORTUGAL —&nbsp; SOLD AS SET &nbsp;— CODED &nbsp;— </span>
     </div>
+  </div>
+
+  <!-- Colorway Showcase -->
+  <section class="vault-section" id="vault">
 
     <div class="cw-stage">
       <div class="cw-slide active" data-colorway="emerald">
@@ -97,12 +103,6 @@
 
   </section>
 
-  <!-- Barcode Strip -->
-  <div class="barcode-strip">
-    <div class="barcode-visual" aria-hidden="true"></div>
-    <div class="barcode-text">CX-001-SS25 &nbsp;|&nbsp; ZÜRICH &nbsp;|&nbsp; MFD_PRT &nbsp;|&nbsp; ED_300 &nbsp;|&nbsp; SS25 &nbsp;|&nbsp; 300_UNITS &nbsp;|&nbsp; NO_RESTOCK &nbsp;|&nbsp; SOLD_AS_SET &nbsp;|&nbsp; CHF_285</div>
-  </div>
-
   <!-- Product Detail Section -->
   <section class="product-section" id="product">
     <div class="product-grid">
@@ -116,6 +116,30 @@
         <div class="product-price-block">
           <div class="product-price">CHF <span class="price-em">285</span></div>
           <div class="product-price-note">SPECTRUM EDITION — <span class="price-em">CHF 320</span></div>
+        </div>
+
+        <div class="colorway-switcher">
+          <button class="cw-swatch active" data-cw="spectrum" title="Spectrum" aria-label="Spectrum colorway">
+            <span class="cw-swatch-inner cw-spectrum"></span>
+          </button>
+          <button class="cw-swatch" data-cw="emerald" title="Emerald" aria-label="Emerald colorway">
+            <span class="cw-swatch-inner" style="background:#2dd47f"></span>
+          </button>
+          <button class="cw-swatch" data-cw="teal" title="Teal" aria-label="Teal colorway">
+            <span class="cw-swatch-inner" style="background:#3aabd1"></span>
+          </button>
+          <button class="cw-swatch" data-cw="violet" title="Violet" aria-label="Violet colorway">
+            <span class="cw-swatch-inner" style="background:#a85ed4"></span>
+          </button>
+          <button class="cw-swatch" data-cw="cream" title="Cream" aria-label="Cream colorway">
+            <span class="cw-swatch-inner" style="background:#f0ebd8"></span>
+          </button>
+        </div>
+
+        <div class="piece-switcher">
+          <button class="piece-btn active" data-piece="hoodie">[HOODIE]</button>
+          <button class="piece-btn" data-piece="joggers">[JOGGERS]</button>
+          <button class="piece-btn" data-piece="set">[SET]</button>
         </div>
 
         <p class="product-desc">
@@ -135,6 +159,7 @@
         </div>
 
         <button class="buy-btn" id="buyBtn">[BUY NOW]</button>
+        <div class="scarcity-note">300 UNITS &nbsp;·&nbsp; NO RESTOCK &nbsp;·&nbsp; FINAL SALE</div>
 
         <div class="product-tags">
           <span class="tag">[ZÜRICH_SS25]</span>
@@ -156,41 +181,15 @@
             onerror="this.src='assets/image.png'"
           >
         </div>
-        <div class="piece-switcher">
-          <button class="piece-btn active" data-piece="hoodie">[HOODIE]</button>
-          <button class="piece-btn" data-piece="joggers">[JOGGERS]</button>
-          <button class="piece-btn" data-piece="set">[SET]</button>
-        </div>
-        <div class="colorway-switcher">
-          <button class="cw-swatch active" data-cw="spectrum" title="Spectrum" aria-label="Spectrum colorway">
-            <span class="cw-swatch-inner cw-spectrum"></span>
-          </button>
-          <button class="cw-swatch" data-cw="emerald" title="Emerald" aria-label="Emerald colorway">
-            <span class="cw-swatch-inner" style="background:#2dd47f"></span>
-          </button>
-          <button class="cw-swatch" data-cw="teal" title="Teal" aria-label="Teal colorway">
-            <span class="cw-swatch-inner" style="background:#3aabd1"></span>
-          </button>
-          <button class="cw-swatch" data-cw="violet" title="Violet" aria-label="Violet colorway">
-            <span class="cw-swatch-inner" style="background:#a85ed4"></span>
-          </button>
-          <button class="cw-swatch" data-cw="cream" title="Cream" aria-label="Cream colorway">
-            <span class="cw-swatch-inner" style="background:#f0ebd8"></span>
-          </button>
-        </div>
       </div>
 
     </div>
   </section>
 
-  <!-- Scrolling Ticker -->
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track">
-      <span>CODED TRACKSUIT &nbsp;— CHF 285 —&nbsp; ZÜRICH SS25 &nbsp;— 300 PIECES —&nbsp; NO RESTOCK &nbsp;— MADE IN PORTUGAL —&nbsp; SOLD AS SET &nbsp;— CODED &nbsp;— </span>
-      <span>CODED TRACKSUIT &nbsp;— CHF 285 —&nbsp; ZÜRICH SS25 &nbsp;— 300 PIECES —&nbsp; NO RESTOCK &nbsp;— MADE IN PORTUGAL —&nbsp; SOLD AS SET &nbsp;— CODED &nbsp;— </span>
-      <span>CODED TRACKSUIT &nbsp;— CHF 285 —&nbsp; ZÜRICH SS25 &nbsp;— 300 PIECES —&nbsp; NO RESTOCK &nbsp;— MADE IN PORTUGAL —&nbsp; SOLD AS SET &nbsp;— CODED &nbsp;— </span>
-      <span>CODED TRACKSUIT &nbsp;— CHF 285 —&nbsp; ZÜRICH SS25 &nbsp;— 300 PIECES —&nbsp; NO RESTOCK &nbsp;— MADE IN PORTUGAL —&nbsp; SOLD AS SET &nbsp;— CODED &nbsp;— </span>
-    </div>
+  <!-- Barcode Strip -->
+  <div class="barcode-strip">
+    <div class="barcode-visual" aria-hidden="true"></div>
+    <div class="barcode-text">CX-001-SS25 &nbsp;|&nbsp; ZÜRICH &nbsp;|&nbsp; MFD_PRT &nbsp;|&nbsp; ED_300 &nbsp;|&nbsp; SS25 &nbsp;|&nbsp; 300_UNITS &nbsp;|&nbsp; NO_RESTOCK &nbsp;|&nbsp; SOLD_AS_SET &nbsp;|&nbsp; CHF_285</div>
   </div>
 
   <!-- Reverse Ticker -->
