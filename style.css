@@ -1190,17 +1190,17 @@ body.vault-page #bg-canvas {
 .brand-hero-ref {
   font-size: 10px;
   letter-spacing: 0.3em;
-  color: var(--muted);
-  margin-bottom: 20px;
+  color: var(--em);
+  margin-bottom: 12px;
   text-transform: uppercase;
 }
 
 .brand-hero-title {
-  font-size: clamp(64px, 12vw, 160px);
+  font-size: clamp(72px, 14vw, 180px);
   font-weight: 800;
   letter-spacing: 0.08em;
   line-height: 0.9;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   text-transform: uppercase;
 }
 
@@ -1209,7 +1209,7 @@ body.vault-page #bg-canvas {
   letter-spacing: 0.12em;
   color: var(--muted);
   line-height: 1.8;
-  margin-bottom: 12px;
+  margin-bottom: 32px;
   text-transform: uppercase;
 }
 
