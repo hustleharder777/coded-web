@@ -1068,7 +1068,7 @@ body::before {
     padding: 60px 40px 48px;
     gap: 36px;
   }
-  .product-visual { position: static; }
+  .product-visual { position: static; order: -1; }
   .product-img { max-height: 75vw; }
 }
 
@@ -1080,7 +1080,7 @@ body::before {
   .product-name { font-size: clamp(36px, 10vw, 52px); }
   .product-price { font-size: 24px; }
   .product-img-wrap { padding: 0; }
-  .product-img { max-height: 80vw; }
+  .product-img { max-height: 55vw; }
   .buy-btn {
     height: 56px;
     background: var(--em);
