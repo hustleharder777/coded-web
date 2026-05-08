@@ -774,20 +774,18 @@ body::before {
 .corner-bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
 .corner-br { bottom: 8px; right: 8px; transform: scale(-1); }
 
-/* Colorway label row (above image) */
-.cw-label-row {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-}
-.cw-label-sep {
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.1em;
-}
-
 /* Progress indicators strip below stage */
 .cw-indicators {
+  border-bottom: 1px solid var(--border);
+}
+
+/* Colorway name + price below stage */
+.cw-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 24px 20px;
   border-bottom: 1px solid var(--border);
 }
 
@@ -847,7 +845,7 @@ body::before {
 /* Fixed shop CTA — pops in when vault is reached */
 .vault-shop-cta {
   position: fixed;
-  top: 14px;
+  top: calc(var(--nav-h) + 12px);
   right: 20px;
   z-index: 200;
   font-family: 'JetBrains Mono', monospace;
