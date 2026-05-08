@@ -197,11 +197,11 @@ document.querySelectorAll('.reveal').forEach(function (el) {
    ================================================================ */
 (function () {
   var colorways = [
-    { id: 'emerald',  name: 'EMERALD',  price: '285' },
-    { id: 'teal',     name: 'TEAL',     price: '285' },
-    { id: 'violet',   name: 'VIOLET',   price: '285' },
-    { id: 'cream',    name: 'CREAM',    price: '285' },
-    { id: 'spectrum', name: 'SPECTRUM', price: '320' },
+    { id: 'emerald',  name: 'LEVERAGE',    price: '285' },
+    { id: 'teal',     name: 'OFFSHORE',    price: '285' },
+    { id: 'violet',   name: 'DISTRACTION', price: '285' },
+    { id: 'cream',    name: 'THE FRONT',   price: '285' },
+    { id: 'spectrum', name: 'ANOMALY',     price: '320' },
   ];
 
   var stage      = document.querySelector('.cw-stage');
@@ -312,7 +312,7 @@ if (productImgWrap) {
     cream:    'assets/colorway-cream.jpg',
   };
   var prices = { spectrum: '320', emerald: '285', teal: '285', violet: '285', cream: '285' };
-  var names  = { spectrum: 'SPECTRUM', emerald: 'EMERALD', teal: 'TEAL', violet: 'VIOLET', cream: 'CREAM' };
+  var names  = { spectrum: 'ANOMALY', emerald: 'LEVERAGE', teal: 'OFFSHORE', violet: 'DISTRACTION', cream: 'THE FRONT' };
 
   var activeCw    = 'spectrum';
   var productImg  = document.getElementById('productImg');
