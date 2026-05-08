@@ -729,7 +729,7 @@ body::before {
    ================================================================ */
 .vault-section {
   background: transparent;
-  padding-top: 60px;
+  padding-top: 20px;
   position: relative;
 }
 
@@ -737,9 +737,9 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  margin-bottom: 24px;
-  padding: 32px 60px;
+  gap: 16px;
+  margin-bottom: 0;
+  padding: 24px 60px;
   position: relative;
   z-index: 1;
 }
@@ -795,13 +795,20 @@ body::before {
 .corner-bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
 .corner-br { bottom: 8px; right: 8px; transform: scale(-1); }
 
-/* Info block centered below stage */
-.cw-info {
+/* Colorway label row (above image) */
+.cw-label-row {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  padding: 28px 60px;
+  align-items: baseline;
+  gap: 10px;
+}
+.cw-label-sep {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+/* Progress indicators strip below stage */
+.cw-indicators {
   border-bottom: 1px solid var(--border);
 }
 
@@ -821,11 +828,12 @@ body::before {
   text-align: center;
 }
 
-/* Progress indicators */
+/* Progress indicators — full-width strip below the image */
 .cw-indicators {
   display: flex;
-  gap: 6px;
-  width: 160px;
+  gap: 0;
+  width: 100%;
+  padding: 0;
 }
 
 .cw-indicator {
@@ -882,8 +890,7 @@ body::before {
   .vault-header { padding: 20px 20px; }
   .vault-meta { font-size: 9px; letter-spacing: 0.12em; white-space: nowrap; }
   .cw-stage { height: 65vh; }
-  .cw-info { padding: 20px 20px; }
-  .cw-indicators { width: 120px; }
+  .cw-indicators { width: 100%; }
 }
 
 /* ================================================================
