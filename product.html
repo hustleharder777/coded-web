@@ -3,28 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CODED — The Drop</title>
+  <title>CODED — Tracksuit CX-001</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <style>body { opacity: 0; }</style>
 </head>
-<body class="vault-page">
+<body class="page-ready">
 
-  <!-- Terminal rain canvas -->
   <canvas id="bg-canvas" aria-hidden="true"></canvas>
-
-  <!-- Film grain overlay -->
   <div class="grain" aria-hidden="true"></div>
 
-  <!-- Nav -->
   <nav class="nav" id="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">CODED</a>
+      <a href="vault.html" class="nav-logo">CODED</a>
       <div class="nav-links">
-        <a href="product.html" class="nav-link">[SHOP]</a>
-        <a href="#vault" class="nav-link">[VAULT]</a>
+        <a href="product.html" class="nav-link" style="color:#fff">[SHOP]</a>
+        <a href="vault.html#vault" class="nav-link">[VAULT]</a>
         <a href="about.html" class="nav-link">[ABOUT]</a>
       </div>
       <div class="nav-right">
@@ -34,93 +29,92 @@
     </div>
   </nav>
 
-  <!-- Brand Hero -->
-  <section class="brand-hero" id="brandHero">
-    <img src="assets/colorway-emerald.jpg" alt="" class="brand-hero-bg-img" onerror="this.src='assets/image.png'">
-    <div class="brand-hero-overlay"></div>
-    <div class="brand-hero-content reveal">
-      <a href="#vault" class="brand-hero-cta">[↓ VIEW THE DROP]</a>
+  <section class="product-section" id="product" style="padding-top: var(--nav-h);">
+    <div class="product-grid">
+
+      <!-- Left: Info -->
+      <div class="product-info reveal">
+        <div class="product-ref">REF — CX-001-SS25</div>
+        <h1 class="product-name">CODED<br>TRACKSUIT</h1>
+        <div class="product-divider"></div>
+
+        <div class="product-price-block">
+          <div class="product-price">CHF <span class="price-em">285</span></div>
+          <div class="product-price-note">SPECTRUM EDITION — <span class="price-em">CHF 320</span></div>
+        </div>
+
+        <div class="colorway-switcher">
+          <button class="cw-swatch active" data-cw="spectrum" title="Spectrum" aria-label="Spectrum colorway">
+            <span class="cw-swatch-inner cw-spectrum"></span>
+          </button>
+          <button class="cw-swatch" data-cw="emerald" title="Emerald" aria-label="Emerald colorway">
+            <span class="cw-swatch-inner" style="background:#2dd47f"></span>
+          </button>
+          <button class="cw-swatch" data-cw="teal" title="Teal" aria-label="Teal colorway">
+            <span class="cw-swatch-inner" style="background:#3aabd1"></span>
+          </button>
+          <button class="cw-swatch" data-cw="violet" title="Violet" aria-label="Violet colorway">
+            <span class="cw-swatch-inner" style="background:#a85ed4"></span>
+          </button>
+          <button class="cw-swatch" data-cw="cream" title="Cream" aria-label="Cream colorway">
+            <span class="cw-swatch-inner" style="background:#f0ebd8"></span>
+          </button>
+        </div>
+
+        <div class="piece-switcher">
+          <button class="piece-btn active" data-piece="hoodie">[HOODIE]</button>
+          <button class="piece-btn" data-piece="joggers">[JOGGERS]</button>
+          <button class="piece-btn" data-piece="set">[SET]</button>
+        </div>
+
+        <p class="product-desc">
+          The word CODED repeating along curving seam lines across the hoodie and joggers. Heavyweight cotton fleece. Dropped shoulders. Oversized fit.<br><br>
+          <span class="product-meta">Made in Portugal &nbsp;·&nbsp; 300 pieces &nbsp;·&nbsp; No restock.</span>
+        </p>
+
+        <div class="size-block">
+          <div class="size-label">SIZE</div>
+          <div class="size-grid">
+            <button class="size-btn">XS</button>
+            <button class="size-btn">S</button>
+            <button class="size-btn active">M</button>
+            <button class="size-btn">L</button>
+            <button class="size-btn sold-out" disabled title="Sold out">XL</button>
+          </div>
+        </div>
+
+        <button class="buy-btn" id="buyBtn">[BUY NOW]</button>
+
+        <div class="product-tags">
+          <span class="tag">[ZÜRICH_SS25]</span>
+          <span class="tag">[MFD_PRT]</span>
+          <span class="tag">[ED_300]</span>
+          <span class="tag">[SOLD_AS_SET]</span>
+        </div>
+      </div>
+
+      <!-- Right: Visual -->
+      <div class="product-visual reveal">
+        <div class="product-watermark" aria-hidden="true">CODED TRACKSUIT</div>
+        <div class="product-img-wrap scan-overlay" id="productImgWrap">
+          <img
+            src="assets/colorway-spectrum.jpg"
+            alt="Coded Tracksuit"
+            class="product-img"
+            id="productImg"
+            onerror="this.src='assets/image.png'"
+          >
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <div class="vault-content">
-
-  <!-- Vault Grid -->
-  <section class="vault-section" id="vault">
-    <div class="vault-header reveal">
-      <span class="vault-meta">5 COLORWAYS &nbsp;—&nbsp; 300 UNITS &nbsp;—&nbsp; NO RESTOCK</span>
-    </div>
-
-    <div class="cw-stage">
-      <div class="cw-slide active" data-colorway="emerald">
-        <img src="assets/colorway-emerald.jpg" alt="Emerald" onerror="this.src='assets/image.png'">
-      </div>
-      <div class="cw-slide" data-colorway="teal">
-        <img src="assets/colorway-teal.jpg" alt="Teal" onerror="this.src='assets/image.png'">
-      </div>
-      <div class="cw-slide" data-colorway="violet">
-        <img src="assets/colorway-violet.jpg" alt="Violet" onerror="this.src='assets/image.png'">
-      </div>
-      <div class="cw-slide" data-colorway="cream">
-        <img src="assets/colorway-cream.jpg" alt="Cream" onerror="this.src='assets/image.png'">
-      </div>
-      <div class="cw-slide" data-colorway="spectrum">
-        <img src="assets/colorway-spectrum.jpg" alt="Spectrum" onerror="this.src='assets/image.png'">
-      </div>
-      <div class="cw-corners" aria-hidden="true">
-        <span class="corner corner-tl"></span>
-        <span class="corner corner-tr"></span>
-        <span class="corner corner-bl"></span>
-        <span class="corner corner-br"></span>
-      </div>
-    </div>
-
-    <div class="cw-bar">
-      <div class="cw-bar-left">
-        <span class="cw-showcase-name">EMERALD</span>
-        <span class="cw-showcase-price">CHF <span class="cw-showcase-price-val price-em">285</span></span>
-      </div>
-      <div class="cw-indicators">
-        <button class="cw-indicator" aria-label="Emerald"></button>
-        <button class="cw-indicator" aria-label="Teal"></button>
-        <button class="cw-indicator" aria-label="Violet"></button>
-        <button class="cw-indicator" aria-label="Cream"></button>
-        <button class="cw-indicator" aria-label="Spectrum"></button>
-      </div>
-      <button class="cw-bar-cta">[SHOP THIS]</button>
-    </div>
-
-  </section>
-
-  <!-- Lookbook / Editorial -->
-  <section class="lookbook-section" id="lookbook">
-    <div class="lookbook-header reveal">
-      <span class="lookbook-label">[EDITORIAL]</span>
-      <span class="lookbook-meta">— SS25 — ZÜRICH —</span>
-    </div>
-    <div class="lookbook-grid">
-      <div class="lookbook-item lookbook-wide reveal">
-        <img src="assets/campaign-aurora.jpg" alt="" onerror="this.style.display='none'">
-        <div class="lookbook-slot-label">[PHOTO_01]</div>
-        <div class="lookbook-caption">01 / ZÜRICH</div>
-      </div>
-      <div class="lookbook-item lookbook-portrait reveal">
-        <img src="assets/campaign-london.jpg" alt="" onerror="this.style.display='none'">
-        <div class="lookbook-slot-label">[PHOTO_02]</div>
-        <div class="lookbook-caption">02 / LONDON</div>
-      </div>
-      <div class="lookbook-item lookbook-portrait reveal">
-        <img src="assets/campaign-roman.jpg" alt="" onerror="this.style.display='none'">
-        <div class="lookbook-slot-label">[PHOTO_03]</div>
-        <div class="lookbook-caption">03 / ROME</div>
-      </div>
-      <div class="lookbook-item lookbook-wide reveal">
-        <img src="assets/product-studio.jpg" alt="" onerror="this.style.display='none'">
-        <div class="lookbook-slot-label">[PHOTO_04]</div>
-        <div class="lookbook-caption">04 / STUDIO</div>
-      </div>
-    </div>
-  </section>
+  <!-- Barcode Strip -->
+  <div class="barcode-strip">
+    <div class="barcode-visual" aria-hidden="true"></div>
+    <div class="barcode-text">CX-001-SS25 &nbsp;|&nbsp; ZÜRICH &nbsp;|&nbsp; MFD_PRT &nbsp;|&nbsp; ED_300 &nbsp;|&nbsp; SS25 &nbsp;|&nbsp; 300_UNITS &nbsp;|&nbsp; NO_RESTOCK &nbsp;|&nbsp; SOLD_AS_SET &nbsp;|&nbsp; CHF_285</div>
+  </div>
 
   <!-- Scrolling Ticker -->
   <div class="ticker" aria-hidden="true">
@@ -142,7 +136,6 @@
     </div>
   </div>
 
-  <!-- Footer -->
   <footer class="footer" id="footer">
     <div class="footer-grid">
       <div class="footer-brand reveal">
@@ -154,8 +147,8 @@
         </div>
       </div>
       <div class="footer-nav reveal">
-        <a href="#product" class="footer-link">[SHOP]</a>
-        <a href="#vault" class="footer-link">[VAULT]</a>
+        <a href="product.html" class="footer-link">[SHOP]</a>
+        <a href="vault.html#vault" class="footer-link">[VAULT]</a>
         <a href="about.html" class="footer-link">[ABOUT]</a>
         <a href="#" class="footer-link">[ARCHIVE]</a>
       </div>
@@ -169,8 +162,6 @@
       </div>
     </div>
   </footer>
-
-  </div><!-- /.vault-content -->
 
   <!-- Cart Drawer -->
   <div class="cart-drawer" id="cartDrawer" aria-hidden="true">

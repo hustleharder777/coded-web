@@ -263,12 +263,7 @@ document.querySelectorAll('.reveal').forEach(function (el) {
 
   /* Click stage or CTA → sync colorway + scroll to product */
   function syncAndShop() {
-    var cwId = colorways[current].id;
-    document.querySelectorAll('.cw-swatch').forEach(function (sw) {
-      if (sw.dataset.cw === cwId) sw.click();
-    });
-    var productSection = document.getElementById('product');
-    if (productSection) productSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.location.href = 'product.html?cw=' + colorways[current].id;
   }
 
   stage.addEventListener('click', syncAndShop);
@@ -540,4 +535,17 @@ function cartAddItem() {
   });
 })();
 
+
+/* ================================================================
+   PRODUCT PAGE — pre-select colorway from URL param (?cw=emerald)
+   ================================================================ */
+(function () {
+  if (!document.getElementById('productImg')) return;
+  var params = new URLSearchParams(window.location.search);
+  var cw = params.get('cw');
+  if (cw) {
+    var swatch = document.querySelector('.cw-swatch[data-cw="' + cw + '"]');
+    if (swatch) swatch.click();
+  }
+})();
 
