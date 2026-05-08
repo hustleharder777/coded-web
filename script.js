@@ -549,21 +549,22 @@ function cartAddItem() {
   }
 })();
 
-/* Vault shop CTA — pop in when vault section enters view */
+/* Vault shop CTA — show after hero leaves view, hide if user scrolls back */
 (function () {
-  var cta   = document.getElementById('vaultShopCta');
-  var vault = document.getElementById('vault');
-  if (!cta || !vault) return;
+  var cta  = document.getElementById('vaultShopCta');
+  var hero = document.getElementById('brandHero');
+  if (!cta || !hero) return;
 
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (e.isIntersecting) {
+        cta.classList.remove('visible');
+      } else {
         cta.classList.add('visible');
-        io.disconnect();
       }
     });
-  }, { threshold: 0.05 });
+  }, { threshold: 0 });
 
-  io.observe(vault);
+  io.observe(hero);
 })();
 
