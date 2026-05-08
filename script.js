@@ -209,7 +209,7 @@ document.querySelectorAll('.reveal').forEach(function (el) {
   var indicators = document.querySelectorAll('.cw-indicator');
   var nameEl     = document.querySelector('.cw-showcase-name');
   var priceEl    = document.querySelector('.cw-showcase-price-val');
-  var cta        = document.querySelector('.cw-bar-cta');
+  var cta        = document.getElementById('vaultShopCta');
 
   if (!stage || !slides.length) return;
 
@@ -547,5 +547,23 @@ function cartAddItem() {
     var swatch = document.querySelector('.cw-swatch[data-cw="' + cw + '"]');
     if (swatch) swatch.click();
   }
+})();
+
+/* Vault shop CTA — pop in when vault section enters view */
+(function () {
+  var cta   = document.getElementById('vaultShopCta');
+  var vault = document.getElementById('vault');
+  if (!cta || !vault) return;
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        cta.classList.add('visible');
+        io.disconnect();
+      }
+    });
+  }, { threshold: 0.05 });
+
+  io.observe(vault);
 })();
 

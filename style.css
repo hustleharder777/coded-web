@@ -196,27 +196,6 @@ body::before {
   gap: 24px;
 }
 
-.nav-live {
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  color: var(--em);
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.live-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--em);
-  box-shadow: 0 0 6px var(--em);
-  animation: livePulse 2s ease-in-out infinite;
-}
-@keyframes livePulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--em); }
-  50%       { opacity: 0.5; box-shadow: 0 0 2px var(--em); }
-}
 
 .nav-cart {
   font-size: 11px;
@@ -865,8 +844,12 @@ body::before {
   transition: none;
 }
 
-/* CTA */
-.cw-bar-cta {
+/* Fixed shop CTA — pops in when vault is reached */
+.vault-shop-cta {
+  position: fixed;
+  top: 14px;
+  right: 20px;
+  z-index: 200;
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
   font-weight: 700;
@@ -874,13 +857,21 @@ body::before {
   color: var(--em);
   background: transparent;
   border: 1px solid var(--em);
-  padding: 10px 22px;
+  padding: 10px 20px;
   cursor: crosshair;
-  transition: box-shadow 0.3s, background 0.3s;
   text-transform: uppercase;
   white-space: nowrap;
+  opacity: 0;
+  transform: scale(0.85) translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease, box-shadow 0.3s, background 0.3s;
 }
-.cw-bar-cta:hover {
+.vault-shop-cta.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+.vault-shop-cta:hover {
   box-shadow: 0 0 24px var(--glow-em);
   background: rgba(45,212,127,0.04);
 }
