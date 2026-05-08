@@ -756,7 +756,6 @@ body::before {
   height: 78vh;
   overflow: hidden;
   cursor: crosshair;
-  border-top: 1px solid var(--border);
 }
 
 .cw-slide {
@@ -801,7 +800,6 @@ body::before {
   align-items: center;
   gap: 32px;
   padding: 18px 60px;
-  border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   background: rgba(4,4,6,0.92);
 }
