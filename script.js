@@ -301,46 +301,44 @@ if (productImgWrap) {
 
 
 /* ================================================================
-   PIECE + COLORWAY SWITCHER
+   COLORWAY SWITCHER
    ================================================================ */
 (function () {
   var imageMap = {
-    hoodie:  { spectrum: 'assets/colorway-spectrum.jpg', emerald: 'assets/colorway-emerald.jpg', teal: 'assets/colorway-teal.jpg', violet: 'assets/colorway-violet.jpg', cream: 'assets/colorway-cream.jpg' },
-    joggers: { spectrum: 'assets/colorway-spectrum.jpg', emerald: 'assets/colorway-emerald.jpg', teal: 'assets/colorway-teal.jpg', violet: 'assets/colorway-violet.jpg', cream: 'assets/colorway-cream.jpg' },
-    set:     { spectrum: 'assets/colorway-spectrum.jpg', emerald: 'assets/colorway-emerald.jpg', teal: 'assets/colorway-teal.jpg', violet: 'assets/colorway-violet.jpg', cream: 'assets/colorway-cream.jpg' },
+    spectrum: 'assets/colorway-spectrum.jpg',
+    emerald:  'assets/colorway-emerald.jpg',
+    teal:     'assets/colorway-teal.jpg',
+    violet:   'assets/colorway-violet.jpg',
+    cream:    'assets/colorway-cream.jpg',
   };
+  var prices = { spectrum: '320', emerald: '285', teal: '285', violet: '285', cream: '285' };
+  var names  = { spectrum: 'SPECTRUM', emerald: 'EMERALD', teal: 'TEAL', violet: 'VIOLET', cream: 'CREAM' };
 
-  var activePiece = 'hoodie';
   var activeCw    = 'spectrum';
   var productImg  = document.getElementById('productImg');
-  var pieceBtns   = document.querySelectorAll('.piece-btn');
   var cwSwatches  = document.querySelectorAll('.cw-swatch');
+  var editionEl   = document.getElementById('productEditionLabel');
+  var priceValEl  = document.querySelector('.product-price-val');
 
-  function updateImage() {
-    var src = (imageMap[activePiece] || {})[activeCw];
-    if (!src) return;
-    productImg.classList.remove('img-missing');
-    productImg.style.opacity = '0';
-    productImg.src = src;
-    productImg.onload  = function () { productImg.style.opacity = '1'; };
-    productImg.onerror = function () { productImg.classList.add('img-missing'); productImg.style.opacity = '1'; };
+  function updateProduct() {
+    var src = imageMap[activeCw];
+    if (productImg && src) {
+      productImg.classList.remove('img-missing');
+      productImg.style.opacity = '0';
+      productImg.src = src;
+      productImg.onload  = function () { productImg.style.opacity = '1'; };
+      productImg.onerror = function () { productImg.classList.add('img-missing'); productImg.style.opacity = '1'; };
+    }
+    if (editionEl)  editionEl.textContent  = names[activeCw] + ' EDITION';
+    if (priceValEl) priceValEl.textContent  = prices[activeCw];
   }
-
-  pieceBtns.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      pieceBtns.forEach(function (b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      activePiece = btn.dataset.piece;
-      updateImage();
-    });
-  });
 
   cwSwatches.forEach(function (sw) {
     sw.addEventListener('click', function () {
       cwSwatches.forEach(function (s) { s.classList.remove('active'); });
       sw.classList.add('active');
       activeCw = sw.dataset.cw;
-      updateImage();
+      updateProduct();
     });
   });
 })();
