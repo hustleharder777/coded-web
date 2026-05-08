@@ -735,8 +735,9 @@ body::before {
 
 .vault-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 20px;
   margin-bottom: 24px;
   padding: 32px 60px;
   position: relative;
@@ -794,21 +795,14 @@ body::before {
 .corner-bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
 .corner-br { bottom: 8px; right: 8px; transform: scale(-1); }
 
-/* Info + progress bar below stage */
-.cw-bar {
+/* Info block centered below stage */
+.cw-info {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 32px;
-  padding: 18px 60px;
+  gap: 14px;
+  padding: 28px 60px;
   border-bottom: 1px solid var(--border);
-  background: rgba(4,4,6,0.92);
-}
-
-.cw-bar-left {
-  display: flex;
-  align-items: baseline;
-  gap: 16px;
-  min-width: 200px;
 }
 
 .cw-showcase-name {
@@ -816,6 +810,7 @@ body::before {
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+  text-align: center;
   transition: color 0.4s;
 }
 
@@ -823,13 +818,14 @@ body::before {
   font-size: 11px;
   letter-spacing: 0.1em;
   color: var(--muted);
+  text-align: center;
 }
 
 /* Progress indicators */
 .cw-indicators {
   display: flex;
   gap: 6px;
-  flex: 1;
+  width: 160px;
 }
 
 .cw-indicator {
@@ -886,9 +882,8 @@ body::before {
   .vault-header { padding: 20px 20px; }
   .vault-meta { font-size: 9px; letter-spacing: 0.12em; white-space: nowrap; }
   .cw-stage { height: 65vh; }
-  .cw-bar { padding: 14px 20px; gap: 16px; flex-wrap: wrap; }
-  .cw-bar-left { min-width: auto; width: 100%; }
-  .cw-indicators { order: -1; width: 100%; }
+  .cw-info { padding: 20px 20px; }
+  .cw-indicators { width: 120px; }
 }
 
 /* ================================================================
