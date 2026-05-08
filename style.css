@@ -335,7 +335,7 @@ body::before {
   line-height: 0.95;
   letter-spacing: -0.01em;
   text-transform: uppercase;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
 
 .product-divider {
@@ -346,13 +346,17 @@ body::before {
   opacity: 0.4;
 }
 
-.product-price-block { margin-bottom: 28px; }
+.product-price-block {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 20px;
+}
 
 .product-price {
   font-size: 28px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  margin-bottom: 6px;
 }
 .price-em { color: var(--em); }
 
@@ -379,7 +383,7 @@ body::before {
 }
 
 /* Size selector */
-.size-block { margin-bottom: 32px; }
+.size-block { margin-bottom: 20px; }
 .size-label {
   font-size: 10px;
   letter-spacing: 0.2em;
@@ -425,33 +429,23 @@ body::before {
 /* Buy button */
 .buy-btn {
   width: 100%;
-  height: 52px;
+  height: auto;
+  padding: 12px 24px;
   background: transparent;
-  border: 1px solid rgba(255,255,255,0.18);
-  color: #fff;
-  font-size: 13px;
+  border: 1px solid var(--em);
+  color: var(--em);
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  transition: border-color 0.25s, color 0.25s, box-shadow 0.25s, background 0.25s;
-  margin-bottom: 24px;
-  position: relative;
-  overflow: hidden;
-}
-.buy-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--spectrum);
-  opacity: 0;
-  transition: opacity 0.3s;
+  cursor: crosshair;
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s, background 0.3s;
 }
 .buy-btn:hover {
-  border-color: var(--em);
-  color: var(--em);
-  box-shadow: 0 0 24px rgba(45,212,127,0.15);
+  box-shadow: 0 0 24px var(--glow-em);
+  background: rgba(45,212,127,0.04);
 }
-.buy-btn:hover::before { opacity: 0.07; }
 .buy-btn:active { background: rgba(45,212,127,0.06); }
 
 /* Tags */
@@ -561,7 +555,7 @@ body::before {
   display: flex;
   gap: 10px;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 .cw-swatch {
   width: 28px;
@@ -1080,20 +1074,7 @@ body::before {
   .product-name { font-size: clamp(36px, 10vw, 52px); }
   .product-price { font-size: 24px; }
   .product-img-wrap { padding: 0; }
-  .product-img { max-height: 55vw; }
-  .buy-btn {
-    height: 56px;
-    background: var(--em);
-    color: var(--bg);
-    border-color: var(--em);
-    font-weight: 800;
-  }
-  .buy-btn:hover {
-    background: #25b86e;
-    border-color: #25b86e;
-    color: var(--bg);
-    box-shadow: 0 0 28px rgba(45,212,127,0.35);
-  }
+  .product-img { max-height: 65vw; }
   .piece-btn { padding: 10px 14px; font-size: 9px; flex: 1; text-align: center; }
   .vault-section { padding: calc(var(--nav-h) + 40px) 20px 48px; }
 
