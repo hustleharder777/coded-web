@@ -139,40 +139,6 @@
 })();
 
 
-/* ================================================================
-   VAULT ENTER — door transition
-   ================================================================ */
-(function () {
-  var CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*?><:/\\|[]{}';
-  var btn     = document.getElementById('vaultEnter');
-  var screen  = document.getElementById('entryScreen');
-  if (!btn || !screen) return;
-
-  btn.addEventListener('click', function () {
-    btn.style.pointerEvents = 'none';
-
-    /* 1. Scramble button text */
-    var scrambles = 0;
-    var iv = setInterval(function () {
-      var r = '[';
-      for (var i = 0; i < 11; i++) r += CHARSET[Math.floor(Math.random() * CHARSET.length)];
-      r += ']';
-      btn.textContent = r;
-      if (++scrambles >= 8) {
-        clearInterval(iv);
-        btn.textContent = '[VAULT_OPEN...]';
-
-        /* 2. Brief pause then fade out and navigate to vault.html */
-        setTimeout(function () {
-          document.body.classList.add('page-exit');
-          setTimeout(function () {
-            window.location.href = 'vault.html';
-          }, 450);
-        }, 280);
-      }
-    }, 60);
-  });
-})();
 
 
 /* ================================================================
@@ -362,6 +328,7 @@ if (productImgWrap) {
    CART
    ================================================================ */
 var cart = [];
+try { cart = JSON.parse(localStorage.getItem('coded_cart') || '[]'); } catch(e) { cart = []; }
 
 function cartOpen() {
   var el = document.getElementById('cartDrawer');
@@ -417,7 +384,8 @@ function cartRender() {
   }).join('');
 
   var total = cart.reduce(function(s, i) { return s + i.price * i.qty; }, 0);
-  if (totalEl) totalEl.innerHTML = '<span>TOTAL</span><span>CHF ' + total + '</span>';
+  if (totalEl) totalEl.innerHTML = '<span>TOTAL</span><span>$' + total + '</span>';
+  try { localStorage.setItem('coded_cart', JSON.stringify(cart)); } catch(e) {}
 }
 function cartChangeQty(idx, delta) {
   cart[idx].qty += delta;
@@ -468,38 +436,22 @@ function cartAddItem() {
   if (closeBtn) closeBtn.addEventListener('click', cartClose);
   if (overlay)  overlay.addEventListener('click', cartClose);
 
+  var checkoutBtn = document.getElementById('cartCheckoutBtn');
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', function () {
+      checkoutBtn.textContent = '[PROCESSING_ORDER...]';
+      checkoutBtn.disabled = true;
+      setTimeout(function () {
+        checkoutBtn.textContent = '[PROCEED_TO_CHECKOUT]';
+        checkoutBtn.disabled = false;
+      }, 2000);
+    });
+  }
+
   cartRender();
 })();
 
 
-/* ================================================================
-   CAMPAIGN STRIP DRAG-TO-SCROLL
-   ================================================================ */
-(function () {
-  var strip = document.getElementById('campaignStrip');
-  if (!strip) return;
-  var isDown = false, startX = 0, scrollLeft = 0;
-
-  strip.addEventListener('mousedown', function (e) {
-    isDown = true; strip.classList.add('dragging');
-    startX = e.pageX - strip.offsetLeft; scrollLeft = strip.scrollLeft;
-  });
-  strip.addEventListener('mouseleave', function () { isDown = false; strip.classList.remove('dragging'); });
-  strip.addEventListener('mouseup',    function () { isDown = false; strip.classList.remove('dragging'); });
-  strip.addEventListener('mousemove',  function (e) {
-    if (!isDown) return;
-    e.preventDefault();
-    strip.scrollLeft = scrollLeft - (e.pageX - strip.offsetLeft - startX) * 1.8;
-  });
-
-  var touchStart = 0, touchScrollLeft = 0;
-  strip.addEventListener('touchstart', function (e) {
-    touchStart = e.touches[0].pageX; touchScrollLeft = strip.scrollLeft;
-  }, { passive: true });
-  strip.addEventListener('touchmove', function (e) {
-    strip.scrollLeft = touchScrollLeft - (e.touches[0].pageX - touchStart) * 1.8;
-  }, { passive: true });
-})();
 
 
 /* ================================================================
@@ -566,3 +518,23 @@ function cartAddItem() {
   io.observe(hero);
 })();
 
+
+/* ================================================================
+   MOBILE NAVIGATION
+   ================================================================ */
+(function () {
+  var hamburger = document.getElementById('navHamburger');
+  var menu      = document.getElementById('navMobileMenu');
+  if (!hamburger || !menu) return;
+  hamburger.addEventListener('click', function () {
+    menu.classList.toggle('open');
+  });
+  menu.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { menu.classList.remove('open'); });
+  });
+  document.addEventListener('click', function (e) {
+    if (!hamburger.contains(e.target) && !menu.contains(e.target)) {
+      menu.classList.remove('open');
+    }
+  });
+})();
