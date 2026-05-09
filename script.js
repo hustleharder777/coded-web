@@ -162,7 +162,7 @@
 
   setTimeout(function () {
     clearInterval(iv);
-    cipher.textContent = '[ACCESS_GRANTED]';
+    cipher.textContent = '[DROP_SECURED]';
     cipher.classList.add('resolved');
     setTimeout(function () { access.classList.add('dismissed'); }, 520);
   }, 1700);
