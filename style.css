@@ -536,6 +536,54 @@ body::before {
 }
 .product-img.img-missing { opacity: 0; height: 400px; }
 
+/* Spin placeholder */
+@keyframes productRock {
+  0%, 100% { transform: perspective(900px) rotateY(-10deg) scale(1.04); }
+  50%       { transform: perspective(900px) rotateY(10deg)  scale(1.04); }
+}
+.product-img--spin {
+  animation: productRock 5s ease-in-out infinite;
+  transform-origin: center center;
+}
+.product-spin-label {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.22);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Product access screen */
+.product-access {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.product-access.dismissed {
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+.product-access-cipher {
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.45);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+.product-access-cipher.resolved {
+  color: var(--em);
+  text-shadow: 0 0 20px var(--em);
+}
+
 /* Piece switcher */
 .piece-switcher {
   display: flex;
@@ -1134,15 +1182,14 @@ body::before {
   .nav-right { gap: 16px; }
 
   .product-grid { padding: 0; gap: 0; }
-  .product-info { padding: 20px 20px 40px; }
-  .product-name { font-size: 28px; }
-  .product-price { font-size: 24px; }
+  .product-info { padding: 24px 20px 40px; }
   .product-watermark { display: none; }
   .product-img-wrap {
     aspect-ratio: 3 / 4;
     width: 100%;
     max-width: 100%;
     overflow: hidden;
+    position: relative;
   }
   .product-img {
     width: 100%;
@@ -1151,6 +1198,7 @@ body::before {
     object-fit: cover;
     object-position: center 15%;
   }
+  .product-img--spin { animation: productRock 5s ease-in-out infinite; }
   .piece-btn { padding: 10px 14px; font-size: 9px; flex: 1; text-align: center; }
   .vault-section { padding: calc(var(--nav-h) + 40px) 20px 48px; }
 

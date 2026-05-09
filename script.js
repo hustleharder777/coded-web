@@ -142,6 +142,48 @@
 
 
 /* ================================================================
+   PRODUCT PAGE — ACCESS SCREEN
+   ================================================================ */
+(function () {
+  var access   = document.getElementById('productAccess');
+  var cipher   = document.getElementById('productAccessCipher');
+  if (!access || !cipher) return;
+
+  var CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*?><:/\\|[]{}';
+  function randStr(len) {
+    var s = '[';
+    for (var i = 0; i < len; i++) s += CHARSET[Math.floor(Math.random() * CHARSET.length)];
+    return s + ']';
+  }
+
+  document.body.style.opacity = '1';
+
+  var iv = setInterval(function () { cipher.textContent = randStr(14); }, 70);
+
+  setTimeout(function () {
+    clearInterval(iv);
+    cipher.textContent = '[ACCESS_GRANTED]';
+    cipher.classList.add('resolved');
+    setTimeout(function () { access.classList.add('dismissed'); }, 520);
+  }, 1700);
+})();
+
+
+/* ================================================================
+   PRODUCT PAGE — INIT COLORWAY FROM URL PARAM (?cw=emerald)
+   ================================================================ */
+(function () {
+  var param = new URLSearchParams(window.location.search).get('cw');
+  if (!param) return;
+  var swatch = document.querySelector('.cw-swatch[data-cw="' + param + '"]');
+  if (!swatch) return;
+  document.querySelectorAll('.cw-swatch').forEach(function (s) { s.classList.remove('active'); });
+  swatch.classList.add('active');
+  swatch.click();
+})();
+
+
+/* ================================================================
    SCROLL REVEAL
    ================================================================ */
 var revealObserver = new IntersectionObserver(function (entries) {

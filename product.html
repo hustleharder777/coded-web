@@ -8,11 +8,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>body { opacity: 0; }</style>
 </head>
 <body class="page-ready">
 
   <canvas id="bg-canvas" aria-hidden="true"></canvas>
   <div class="grain" aria-hidden="true"></div>
+
+  <!-- Access Screen -->
+  <div class="product-access" id="productAccess">
+    <div class="product-access-cipher" id="productAccessCipher">[INITIALIZING...]</div>
+  </div>
 
   <nav class="nav" id="nav">
     <div class="nav-inner">
@@ -38,10 +44,22 @@
   <section class="product-section" id="product" style="padding-top: var(--nav-h);">
     <div class="product-grid">
 
-      <!-- Left: Info -->
-      <div class="product-info reveal">
-        <h1 class="product-name">GAMECHANGERS</h1>
+      <!-- Visual / Spin Demo -->
+      <div class="product-visual reveal">
+        <div class="product-img-wrap scan-overlay" id="productImgWrap">
+          <img
+            src="assets/colorway-spectrum.jpg"
+            alt="Coded Tracksuit"
+            class="product-img product-img--spin"
+            id="productImg"
+            onerror="this.src='assets/image.png'"
+          >
+          <div class="product-spin-label">[3D_VIEWER — PLACEHOLDER]</div>
+        </div>
+      </div>
 
+      <!-- Controls -->
+      <div class="product-info reveal">
         <div class="colorway-switcher">
           <button class="cw-swatch active" data-cw="spectrum" title="Anomaly" aria-label="Anomaly colorway">
             <span class="cw-swatch-inner cw-spectrum"></span>
@@ -70,25 +88,6 @@
             <button class="size-btn sold-out" disabled title="Sold out">XL</button>
           </div>
         </div>
-
-        <p class="product-desc">
-          The word CODED repeating along curving seam lines across the hoodie and joggers. Heavyweight cotton fleece. Dropped shoulders. Oversized fit.<br><br>
-          <span class="product-meta">Made in Portugal &nbsp;·&nbsp; 300 pieces &nbsp;·&nbsp; No restock.</span>
-        </p>
-      </div>
-
-      <!-- Right: Visual -->
-      <div class="product-visual reveal">
-        <div class="product-watermark" aria-hidden="true">GAMECHANGERS</div>
-        <div class="product-img-wrap scan-overlay" id="productImgWrap">
-          <img
-            src="assets/colorway-spectrum.jpg"
-            alt="Coded Tracksuit"
-            class="product-img"
-            id="productImg"
-            onerror="this.src='assets/image.png'"
-          >
-        </div>
       </div>
 
     </div>
@@ -104,19 +103,19 @@
   <div class="ticker" aria-hidden="true">
     <div class="ticker-track">
       <span>GAMECHANGERS &nbsp;— $285 —&nbsp; ZÜRICH SS25 &nbsp;— 300 PIECES —&nbsp; NO RESTOCK &nbsp;— MADE IN PORTUGAL —&nbsp; SOLD AS SET &nbsp;— CODED &nbsp;— </span>
-      <span>GAMECHANGERS &nbsp;— $285 —&nbsp; ZÜRICH SS25 &nbsp;— 300 PIECES —&nbsp; NO RESTOCK &nbsp;— MADE IN PORTUGAL —&nbsp; SOLD AS SET &nbsp;— CODED &nbsp;— </span>
-      <span>GAMECHANGERS &nbsp;— $285 —&nbsp; ZÜRICH SS25 &nbsp;— 300 PIECES —&nbsp; NO RESTOCK &nbsp;— MADE IN PORTUGAL —&nbsp; SOLD AS SET &nbsp;— CODED &nbsp;— </span>
-      <span>GAMECHANGERS &nbsp;— $285 —&nbsp; ZÜRICH SS25 &nbsp;— 300 PIECES —&nbsp; NO RESTOCK &nbsp;— MADE IN PORTUGAL —&nbsp; SOLD AS SET &nbsp;— CODED &nbsp;— </span>
+      <span>GAMECHANGERS &nbsp;— $285 —&nbsp; ZÜRICH SS25 &nbsp;— 300 PIECES —&nbsp; NO RESTOCK &nbsp;— MADE IN PORTUGAL &nbsp;— SOLD AS SET &nbsp;— CODED &nbsp;— </span>
+      <span>GAMECHANGERS &nbsp;— $285 —&nbsp; ZÜRICH SS25 &nbsp;— 300 PIECES &nbsp;— NO RESTOCK &nbsp;— MADE IN PORTUGAL &nbsp;— SOLD AS SET &nbsp;— CODED &nbsp;— </span>
+      <span>GAMECHANGERS &nbsp;— $285 —&nbsp; ZÜRICH SS25 &nbsp;— 300 PIECES &nbsp;— NO RESTOCK &nbsp;— MADE IN PORTUGAL &nbsp;— SOLD AS SET &nbsp;— CODED &nbsp;— </span>
     </div>
   </div>
 
   <!-- Reverse Ticker -->
   <div class="ticker ticker--reverse" aria-hidden="true">
     <div class="ticker-track ticker-track--reverse">
-      <span>ANOMALY EDITION &nbsp;— $320 —&nbsp; LEVERAGE &nbsp;— OFFSHORE —&nbsp; DISTRACTION &nbsp;— THE FRONT —&nbsp; 5 COLORWAYS &nbsp;— LIMITED RUN &nbsp;— ZÜRICH &nbsp;—</span>
-      <span>ANOMALY EDITION &nbsp;— $320 —&nbsp; LEVERAGE &nbsp;— OFFSHORE —&nbsp; DISTRACTION &nbsp;— THE FRONT —&nbsp; 5 COLORWAYS &nbsp;— LIMITED RUN &nbsp;— ZÜRICH &nbsp;—</span>
-      <span>ANOMALY EDITION &nbsp;— $320 —&nbsp; LEVERAGE &nbsp;— OFFSHORE —&nbsp; DISTRACTION &nbsp;— THE FRONT —&nbsp; 5 COLORWAYS &nbsp;— LIMITED RUN &nbsp;— ZÜRICH &nbsp;—</span>
-      <span>SPECTRUM EDITION &nbsp;— $320 —&nbsp; EMERALD &nbsp;— TEAL —&nbsp; VIOLET &nbsp;— CREAM &nbsp;— 5 COLORWAYS &nbsp;— LIMITED RUN &nbsp;— ZÜRICH &nbsp;— </span>
+      <span>ANOMALY EDITION &nbsp;— $320 —&nbsp; LEVERAGE &nbsp;— OFFSHORE —&nbsp; DISTRACTION &nbsp;— THE FRONT &nbsp;— 5 COLORWAYS &nbsp;— LIMITED RUN &nbsp;— ZÜRICH &nbsp;—</span>
+      <span>ANOMALY EDITION &nbsp;— $320 —&nbsp; LEVERAGE &nbsp;— OFFSHORE &nbsp;— DISTRACTION &nbsp;— THE FRONT &nbsp;— 5 COLORWAYS &nbsp;— LIMITED RUN &nbsp;— ZÜRICH &nbsp;—</span>
+      <span>ANOMALY EDITION &nbsp;— $320 &nbsp;— LEVERAGE &nbsp;— OFFSHORE &nbsp;— DISTRACTION &nbsp;— THE FRONT &nbsp;— 5 COLORWAYS &nbsp;— LIMITED RUN &nbsp;— ZÜRICH &nbsp;—</span>
+      <span>ANOMALY EDITION &nbsp;— $320 &nbsp;— LEVERAGE &nbsp;— OFFSHORE &nbsp;— DISTRACTION &nbsp;— THE FRONT &nbsp;— 5 COLORWAYS &nbsp;— LIMITED RUN &nbsp;— ZÜRICH &nbsp;— </span>
     </div>
   </div>
 
