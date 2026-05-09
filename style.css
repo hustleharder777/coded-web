@@ -205,6 +205,19 @@ body::before {
 }
 .nav-cart:hover { color: #fff; }
 
+.nav-buy-btn {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--em);
+  background: transparent;
+  border: 1px solid var(--em);
+  padding: 5px 10px;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.nav-buy-btn:hover { background: var(--em); color: #000; }
+.nav-buy-btn.added { color: #fff; border-color: #fff; }
+
 /* ================================================================
    ENTRY SCREEN
    ================================================================ */
