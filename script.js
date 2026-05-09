@@ -333,9 +333,10 @@ if (productImgWrap) {
     if (productImg && src) {
       productImg.classList.remove('img-missing');
       productImg.style.opacity = '0';
-      productImg.src = src;
       productImg.onload  = function () { productImg.style.opacity = '1'; };
       productImg.onerror = function () { productImg.classList.add('img-missing'); productImg.style.opacity = '1'; };
+      productImg.src = src;
+      if (productImg.complete) { productImg.style.opacity = '1'; }
     }
     if (editionEl)  editionEl.textContent  = names[activeCw] + ' EDITION';
     if (priceValEl) priceValEl.textContent  = prices[activeCw];
