@@ -1118,6 +1118,7 @@ body::before {
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
   .nav-inner { padding: 0 20px; }
+  .nav-right { gap: 12px; }
 
   .product-grid { padding: 0; gap: 0; }
   .product-info { padding: 20px 20px 40px; }
