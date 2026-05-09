@@ -1116,8 +1116,13 @@ body::before {
 
 @media (max-width: 800px) {
   .nav-links { display: none; }
-  .nav-hamburger { display: flex; margin-left: auto; }
-  .nav-inner { padding: 0 20px; }
+  .nav-inner { position: relative; padding: 0 20px; }
+  .nav-hamburger {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 
   .product-grid { padding: 0; gap: 0; }
   .product-info { padding: 20px 20px 40px; }
