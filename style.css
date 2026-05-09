@@ -1117,8 +1117,7 @@ body::before {
 @media (max-width: 800px) {
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
-  .nav-inner { position: relative; padding: 0 20px; }
-  .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); }
+  .nav-inner { padding: 0 20px; }
   .nav-right { gap: 16px; }
 
   .product-grid { padding: 0; gap: 0; }
