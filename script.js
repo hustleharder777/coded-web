@@ -324,22 +324,36 @@ if (productImgWrap) {
 
   var activeCw    = 'spectrum';
   var productImg  = document.getElementById('productImg');
+  var productImgBack = document.getElementById('productImgBack');
   var cwSwatches  = document.querySelectorAll('.cw-swatch');
   var editionEl   = document.getElementById('productEditionLabel');
   var priceValEl  = document.querySelector('.product-price-val');
 
   function updateProduct() {
     var src = imageMap[activeCw];
-    if (productImg && src) {
-      productImg.classList.remove('img-missing');
-      productImg.style.opacity = '0';
-      productImg.onload  = function () { productImg.style.opacity = '1'; };
-      productImg.onerror = function () { productImg.classList.add('img-missing'); productImg.style.opacity = '1'; };
-      productImg.src = src;
-      if (productImg.complete) { productImg.style.opacity = '1'; }
-    }
     if (editionEl)  editionEl.textContent  = names[activeCw] + ' EDITION';
     if (priceValEl) priceValEl.textContent  = prices[activeCw];
+    if (!productImg || !src) return;
+    productImg.classList.remove('img-missing');
+
+    // Load new image into back layer silently, then crossfade
+    var back = productImgBack;
+    if (!back) { productImg.src = src; return; }
+
+    function doFade() {
+      productImg.style.opacity = '0';
+      function onEnd() {
+        productImg.removeEventListener('transitionend', onEnd);
+        productImg.src = src;
+        productImg.style.opacity = '1';
+      }
+      productImg.addEventListener('transitionend', onEnd);
+    }
+
+    back.onload = doFade;
+    back.onerror = function () { productImg.classList.add('img-missing'); };
+    back.src = src;
+    if (back.complete) doFade();
   }
 
   cwSwatches.forEach(function (sw) {
