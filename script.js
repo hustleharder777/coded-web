@@ -256,6 +256,16 @@ document.querySelectorAll('.reveal').forEach(function (el) {
     timer = setTimeout(function () { goTo(current + 1); }, DURATION);
   }
 
+  /* Touch swipe */
+  var touchStartX = 0;
+  stage.addEventListener('touchstart', function (e) {
+    touchStartX = e.changedTouches[0].clientX;
+  }, { passive: true });
+  stage.addEventListener('touchend', function (e) {
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+
   /* Pause auto-cycle on hover */
   stage.addEventListener('mouseenter', function () {
     paused = true;
@@ -498,9 +508,20 @@ function cartAddItem() {
       checkoutBtn.textContent = '[PROCESSING_ORDER...]';
       checkoutBtn.disabled = true;
       setTimeout(function () {
-        checkoutBtn.textContent = '[PROCEED_TO_CHECKOUT]';
-        checkoutBtn.disabled = false;
-      }, 2000);
+        checkoutBtn.textContent = '[ORDER_CONFIRMED ✓]';
+        checkoutBtn.style.borderColor = 'var(--em)';
+        checkoutBtn.style.color = 'var(--em)';
+        cart = [];
+        try { localStorage.removeItem('coded_cart'); } catch(e) {}
+        cartRender();
+        setTimeout(function () {
+          checkoutBtn.textContent = '[PROCEED_TO_CHECKOUT]';
+          checkoutBtn.style.borderColor = '';
+          checkoutBtn.style.color = '';
+          checkoutBtn.disabled = false;
+          cartClose();
+        }, 2200);
+      }, 1800);
     });
   }
 

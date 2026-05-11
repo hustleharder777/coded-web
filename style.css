@@ -551,6 +551,39 @@ body::before {
   z-index: 1;
   object-fit: contain;
 }
+.product-img-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  padding: 32px 20px 16px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  background: linear-gradient(to top, rgba(4,4,6,0.88) 0%, transparent 100%);
+  pointer-events: none;
+}
+.product-img-overlay-name {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #fff;
+  text-transform: uppercase;
+}
+.product-img-overlay-edition {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--em);
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+.product-img-overlay-price {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--em);
+}
 .product-img.img-missing { opacity: 0; height: 400px; }
 
 /* Spin placeholder */
