@@ -1821,6 +1821,7 @@ body.vault-page #bg-canvas {
     overflow-y: auto;
   }
   .product-watermark { display: none; }
-  /* Vault carousel: shrink to fit full section in one viewport */
-  .cw-stage { height: calc(100vh - var(--nav-h) - 160px); }
+  /* Vault section: fill viewport below nav, distribute space via flex */
+  .vault-section { height: calc(100vh - var(--nav-h)); display: flex; flex-direction: column; }
+  .cw-stage { flex: 1; height: auto; min-height: 0; }
 }
