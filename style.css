@@ -6,7 +6,7 @@
 
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
 
 body {
   background: var(--bg);
@@ -1821,4 +1821,6 @@ body.vault-page #bg-canvas {
     overflow-y: auto;
   }
   .product-watermark { display: none; }
+  /* Vault carousel: shrink to fit full section in one viewport */
+  .cw-stage { height: calc(100vh - var(--nav-h) - 160px); }
 }
