@@ -1360,7 +1360,7 @@ body.vault-page #bg-canvas {
 }
 
 .brand-hero-title {
-  font-size: clamp(72px, 14vw, 180px);
+  font-size: clamp(52px, 9vw, 110px);
   font-weight: 800;
   letter-spacing: 0.08em;
   line-height: 0.9;
@@ -1771,25 +1771,35 @@ body.vault-page #bg-canvas {
 .img-missing { opacity: 0 !important; }
 
 /* ================================================================
-   DESKTOP — PRODUCT PAGE (single column, centered, adjacent to mobile)
+   DESKTOP — PRODUCT PAGE (two-column: image left, controls right)
    ================================================================ */
 @media (min-width: 801px) {
-  .product-section { display: flex; justify-content: center; }
+  /* Hide nav links on product page so [ADD TO CART] owns center */
+  .product-page .nav-links { display: none; }
+
+  /* Two-column layout */
+  .product-section { padding-top: var(--nav-h); min-height: 100vh; }
   .product-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 400px;
     padding: 0;
     gap: 0;
-    width: 100%;
-    max-width: 560px;
+    max-width: 100%;
+    height: calc(100vh - var(--nav-h));
+    align-items: stretch;
   }
-  .product-visual { order: -1; }
-  .product-info { padding: 24px 32px 48px; }
-  .product-watermark { display: none; }
+  .product-visual {
+    position: sticky;
+    top: var(--nav-h);
+    height: calc(100vh - var(--nav-h));
+    order: 0;
+    overflow: hidden;
+  }
   .product-img-wrap {
-    aspect-ratio: 3 / 4;
+    height: 100%;
     width: 100%;
     max-width: 100%;
     overflow: hidden;
+    aspect-ratio: unset;
   }
   .product-img--front,
   .product-img--back {
@@ -1797,6 +1807,18 @@ body.vault-page #bg-canvas {
     height: 100%;
     max-height: none;
     object-fit: cover;
-    object-position: center 15%;
+    object-position: center 10%;
   }
+  /* Controls panel */
+  .product-info {
+    padding: 0 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+    border-left: 1px solid var(--border);
+    height: 100%;
+    overflow-y: auto;
+  }
+  .product-watermark { display: none; }
 }

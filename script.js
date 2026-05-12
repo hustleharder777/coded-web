@@ -582,6 +582,9 @@ function cartAddItem() {
   var hero = document.getElementById('brandHero');
   if (!cta || !hero) return;
 
+  /* Show after 3s regardless of scroll position */
+  setTimeout(function () { cta.classList.add('visible'); }, 3000);
+
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (e.isIntersecting) {
@@ -590,7 +593,7 @@ function cartAddItem() {
         cta.classList.add('visible');
       }
     });
-  }, { threshold: 0 });
+  }, { threshold: 0.3 });
 
   io.observe(hero);
 })();
