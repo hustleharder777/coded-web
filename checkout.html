@@ -38,7 +38,13 @@
 
         <div id="checkoutFormState">
 
-          <div class="checkout-block-label">[CUSTOMER_INFO]</div>
+          <!-- Order manifest — above form on mobile, hidden on desktop -->
+          <div class="co-manifest" id="coManifest">
+            <div class="co-manifest-label">[ORDER_MANIFEST]</div>
+            <div class="co-manifest-items" id="manifestItems"></div>
+          </div>
+
+          <div class="checkout-block-label checkout-block-label--mt">[CUSTOMER_INFO]</div>
           <form id="checkoutForm" novalidate>
             <div class="checkout-field-row">
               <div class="checkout-field">
@@ -84,12 +90,6 @@
 
           </form>
 
-          <!-- Order manifest — shown below form on mobile, hidden on desktop -->
-          <div class="co-manifest" id="coManifest">
-            <div class="co-manifest-label">[ORDER_MANIFEST]</div>
-            <div class="co-manifest-items" id="manifestItems"></div>
-          </div>
-
         </div>
 
         <!-- Success state -->
@@ -134,8 +134,13 @@
     <div class="checkout-bottom-meta">
       <span class="checkout-bottom-label">TOTAL</span>
       <span class="checkout-bottom-amount" id="bottomTotal">$0</span>
+      <span class="checkout-bottom-scarcity">300 UNITS &nbsp;·&nbsp; NO RESTOCK</span>
     </div>
-    <button class="checkout-bottom-btn" id="submitBtn" form="checkoutForm" type="submit" disabled>[COMPLETE ORDER]</button>
+    <div class="checkout-bottom-actions">
+      <span class="checkout-bottom-hint" id="bottomHint">COMPLETE FORM ABOVE</span>
+      <button class="checkout-bottom-btn" id="submitBtn" form="checkoutForm" type="submit" disabled>[COMPLETE ORDER]</button>
+      <span class="checkout-bottom-trust">SECURE CHECKOUT &nbsp;·&nbsp; SSL</span>
+    </div>
   </div>
 
   <script src="https://js.stripe.com/v3/"></script>

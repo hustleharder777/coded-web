@@ -1864,11 +1864,11 @@ body.vault-page #bg-canvas {
 }
 
 /* Compact summary strip (mobile only) */
-/* Order manifest — below form on mobile, hidden on desktop */
+/* Order manifest — above form on mobile, hidden on desktop */
 .co-manifest {
-  margin-top: 32px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
+  padding-bottom: 24px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
 }
 
 .co-manifest-label {
@@ -1923,7 +1923,7 @@ body.vault-page #bg-canvas {
 
 /* Form panel */
 .checkout-form-wrap {
-  padding: 28px 20px 0;
+  padding: 16px 20px 0;
   display: flex;
   flex-direction: column;
 }
@@ -2041,6 +2041,38 @@ body.vault-page #bg-canvas {
   gap: 2px;
 }
 
+.checkout-bottom-scarcity {
+  font-size: 7px;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.22);
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+.checkout-bottom-actions {
+  flex: 1;
+  max-width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.checkout-bottom-hint {
+  font-size: 7px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  text-transform: uppercase;
+  transition: opacity 0.3s;
+}
+
+.checkout-bottom-trust {
+  font-size: 7px;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.18);
+  text-transform: uppercase;
+}
+
 .checkout-bottom-label {
   font-size: 8px;
   letter-spacing: 0.22em;
@@ -2056,8 +2088,7 @@ body.vault-page #bg-canvas {
 }
 
 .checkout-bottom-btn {
-  flex: 1;
-  max-width: 220px;
+  width: 100%;
   padding: 16px 12px;
   font-family: inherit;
   font-size: 10px;
@@ -2245,7 +2276,7 @@ body.vault-page #bg-canvas {
     padding: 16px 48px;
   }
 
-  .checkout-bottom-btn {
+  .checkout-bottom-actions {
     max-width: 280px;
   }
 }
