@@ -1363,6 +1363,7 @@ body.vault-page #bg-canvas {
   font-size: clamp(52px, 9vw, 110px);
   font-weight: 800;
   letter-spacing: 0.08em;
+  word-spacing: -0.1em;
   line-height: 0.9;
   margin-bottom: 28px;
   text-transform: uppercase;
@@ -1824,4 +1825,6 @@ body.vault-page #bg-canvas {
   /* Vault section: fill viewport below nav, distribute space via flex */
   .vault-section { height: calc(100vh - var(--nav-h)); display: flex; flex-direction: column; }
   .cw-stage { flex: 1; height: auto; min-height: 0; }
+  /* Desktop hero: cover fill (mobile keeps contain) */
+  .brand-hero-bg-img { object-fit: cover; object-position: center center; }
 }
