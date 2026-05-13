@@ -43,7 +43,7 @@
   stripItems.innerHTML = cart.map(function (item) {
     return '<span class="strip-item">' + item.colorway + ' · SIZE_' + item.size +
       (item.qty > 1 ? ' · QTY_' + item.qty : '') + '</span>';
-  }).join('');
+  }).join('<span class="strip-sep"> — </span>');
   stripTotal.textContent = '$' + total;
 
   // Fixed bar total

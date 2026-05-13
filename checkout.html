@@ -30,19 +30,20 @@
   </nav>
 
   <section class="checkout-section">
+
+    <!-- Compact order strip (mobile only) — flush below nav -->
+    <div class="checkout-summary-strip" id="summaryStrip">
+      <div class="strip-items" id="stripItems"></div>
+      <div class="strip-total">
+        <span class="strip-total-label">TOTAL</span>
+        <span class="strip-total-amount" id="stripTotal">$0</span>
+      </div>
+    </div>
+
     <div class="checkout-grid">
 
       <!-- LEFT / MOBILE-FIRST: Form -->
       <div class="checkout-form-wrap">
-
-        <!-- Compact order strip (mobile only) -->
-        <div class="checkout-summary-strip" id="summaryStrip">
-          <div class="strip-items" id="stripItems"></div>
-          <div class="strip-total">
-            <span class="strip-total-label">TOTAL</span>
-            <span class="strip-total-amount" id="stripTotal">$0</span>
-          </div>
-        </div>
 
         <div id="checkoutFormState">
 
