@@ -24,7 +24,7 @@
         <a href="about.html" class="nav-link">[ABOUT]</a>
       </div>
       <div class="nav-right">
-        <a href="product.html" class="nav-cart" id="navCartBack">[← BACK]</a>
+        <a href="product.html" class="nav-cart">[← BACK]</a>
       </div>
     </div>
   </nav>
@@ -32,29 +32,18 @@
   <section class="checkout-section">
     <div class="checkout-grid">
 
-      <!-- Order Summary -->
-      <div class="checkout-summary">
-        <div class="checkout-block-label">[ORDER_SUMMARY]</div>
-        <div class="checkout-items" id="checkoutItems"></div>
-        <div class="checkout-summary-totals">
-          <div class="checkout-total-row">
-            <span>SUBTOTAL</span>
-            <span id="checkoutSubtotal">$0</span>
-          </div>
-          <div class="checkout-total-row checkout-total-row--muted">
-            <span>SHIPPING</span>
-            <span>CALCULATED AT NEXT STEP</span>
-          </div>
-          <div class="checkout-total-row checkout-total-row--em" id="checkoutTotalRow">
-            <span>TOTAL</span>
-            <span id="checkoutTotal">$0</span>
+      <!-- LEFT / MOBILE-FIRST: Form -->
+      <div class="checkout-form-wrap">
+
+        <!-- Compact order strip (mobile only) -->
+        <div class="checkout-summary-strip" id="summaryStrip">
+          <div class="strip-items" id="stripItems"></div>
+          <div class="strip-total">
+            <span class="strip-total-label">TOTAL</span>
+            <span class="strip-total-amount" id="stripTotal">$0</span>
           </div>
         </div>
-        <div class="checkout-summary-meta">300 UNITS &nbsp;·&nbsp; NO RESTOCK &nbsp;·&nbsp; MADE IN PORTUGAL</div>
-      </div>
 
-      <!-- Checkout Form -->
-      <div class="checkout-form-wrap">
         <div id="checkoutFormState">
 
           <div class="checkout-block-label">[CUSTOMER_INFO]</div>
@@ -84,9 +73,9 @@
                 <label class="checkout-label">CITY</label>
                 <input class="checkout-input" id="city" type="text" placeholder="[CITY___________________]" autocomplete="address-level2" required>
               </div>
-              <div class="checkout-field checkout-field--sm">
+              <div class="checkout-field">
                 <label class="checkout-label">POSTAL CODE</label>
-                <input class="checkout-input" id="postal" type="text" placeholder="[00000]" autocomplete="postal-code" required>
+                <input class="checkout-input" id="postal" type="text" placeholder="[00000__]" autocomplete="postal-code" required>
               </div>
             </div>
             <div class="checkout-field">
@@ -101,12 +90,11 @@
             </div>
             <div id="card-errors" class="checkout-card-errors" role="alert"></div>
 
-            <button type="submit" class="checkout-submit-btn" id="submitBtn">[COMPLETE ORDER]</button>
           </form>
 
         </div>
 
-        <!-- Success state (hidden until payment confirmed) -->
+        <!-- Success state -->
         <div id="checkoutSuccess" class="checkout-success" style="display:none">
           <div class="checkout-success-icon">✓</div>
           <div class="checkout-success-title">ORDER CONFIRMED</div>
@@ -118,8 +106,39 @@
         </div>
 
       </div>
+
+      <!-- RIGHT: Full order summary (desktop only) -->
+      <div class="checkout-summary">
+        <div class="checkout-block-label">[ORDER_SUMMARY]</div>
+        <div class="checkout-items" id="checkoutItems"></div>
+        <div class="checkout-summary-totals">
+          <div class="checkout-total-row">
+            <span>SUBTOTAL</span>
+            <span id="checkoutSubtotal">$0</span>
+          </div>
+          <div class="checkout-total-row checkout-total-row--muted">
+            <span>SHIPPING</span>
+            <span>CALCULATED AT NEXT STEP</span>
+          </div>
+          <div class="checkout-total-row checkout-total-row--em">
+            <span>TOTAL</span>
+            <span id="checkoutTotal">$0</span>
+          </div>
+        </div>
+        <div class="checkout-summary-meta">300 UNITS &nbsp;·&nbsp; NO RESTOCK &nbsp;·&nbsp; MADE IN PORTUGAL</div>
+      </div>
+
     </div>
   </section>
+
+  <!-- Fixed bottom action bar -->
+  <div class="checkout-bottom-bar" id="checkoutBottomBar">
+    <div class="checkout-bottom-meta">
+      <span class="checkout-bottom-label">TOTAL</span>
+      <span class="checkout-bottom-amount" id="bottomTotal">$0</span>
+    </div>
+    <button class="checkout-bottom-btn" id="submitBtn" form="checkoutForm" type="submit" disabled>[COMPLETE ORDER]</button>
+  </div>
 
   <script src="https://js.stripe.com/v3/"></script>
   <script src="checkout.js"></script>

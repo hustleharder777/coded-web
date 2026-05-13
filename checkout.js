@@ -1,10 +1,9 @@
 (function () {
   'use strict';
 
-  // ── Config ──────────────────────────────────────────────────────────────────
   var STRIPE_PK = 'pk_test_REPLACE_WITH_YOUR_PUBLISHABLE_KEY';
 
-  // ── Cart ────────────────────────────────────────────────────────────────────
+  // ── Cart ─────────────────────────────────────────────────────────────────────
   var cart = [];
   try { cart = JSON.parse(localStorage.getItem('coded_cart') || '[]'); } catch (e) { cart = []; }
 
@@ -13,18 +12,19 @@
     return;
   }
 
-  // ── Fade in ──────────────────────────────────────────────────────────────────
+  // ── Fade in ───────────────────────────────────────────────────────────────────
   document.body.style.transition = 'opacity 0.4s';
   document.body.style.opacity = '1';
 
-  // ── Render order summary ─────────────────────────────────────────────────────
-  var itemsEl     = document.getElementById('checkoutItems');
-  var subtotalEl  = document.getElementById('checkoutSubtotal');
-  var totalEl     = document.getElementById('checkoutTotal');
-
+  // ── Totals ────────────────────────────────────────────────────────────────────
   var total = cart.reduce(function (s, i) { return s + i.price * i.qty; }, 0);
 
-  itemsEl.innerHTML = cart.map(function (item) {
+  // Desktop summary panel
+  var desktopItems   = document.getElementById('checkoutItems');
+  var desktopSubtotal = document.getElementById('checkoutSubtotal');
+  var desktopTotal   = document.getElementById('checkoutTotal');
+
+  desktopItems.innerHTML = cart.map(function (item) {
     return '<div class="co-item">' +
       '<div class="co-item-info">' +
         '<div class="co-item-name">' + item.name + '</div>' +
@@ -34,40 +34,83 @@
       '<div class="co-item-price">$' + (item.price * item.qty) + '</div>' +
     '</div>';
   }).join('');
+  desktopSubtotal.textContent = '$' + total;
+  desktopTotal.textContent    = '$' + total;
 
-  subtotalEl.textContent = '$' + total;
-  totalEl.textContent    = '$' + total;
+  // Mobile compact strip
+  var stripItems = document.getElementById('stripItems');
+  var stripTotal = document.getElementById('stripTotal');
+  stripItems.innerHTML = cart.map(function (item) {
+    return '<span class="strip-item">' + item.colorway + ' · SIZE_' + item.size +
+      (item.qty > 1 ? ' · QTY_' + item.qty : '') + '</span>';
+  }).join('');
+  stripTotal.textContent = '$' + total;
 
-  // ── Stripe setup ─────────────────────────────────────────────────────────────
+  // Fixed bar total
+  document.getElementById('bottomTotal').textContent = '$' + total;
+
+  // ── Stripe ────────────────────────────────────────────────────────────────────
   var stripe   = Stripe(STRIPE_PK);
   var elements = stripe.elements();
-
-  var cardStyle = {
-    base: {
-      color: '#e8e8e8',
-      fontFamily: '"JetBrains Mono", monospace',
-      fontSize: '11px',
-      letterSpacing: '0.08em',
-      '::placeholder': { color: '#444' },
-      iconColor: '#2dd47f',
+  var card = elements.create('card', {
+    style: {
+      base: {
+        color: '#e8e8e8',
+        fontFamily: '"JetBrains Mono", monospace',
+        fontSize: '12px',
+        letterSpacing: '0.06em',
+        '::placeholder': { color: '#3a3a3a' },
+        iconColor: '#2dd47f',
+      },
+      invalid: { color: '#ff4d4d', iconColor: '#ff4d4d' },
     },
-    invalid: { color: '#ff4d4d', iconColor: '#ff4d4d' },
-  };
-
-  var card = elements.create('card', { style: cardStyle, hidePostalCode: true });
+    hidePostalCode: true,
+  });
   card.mount('#card-element');
 
+  // ── Validation ────────────────────────────────────────────────────────────────
+  var cardComplete = false;
+  var submitBtn    = document.getElementById('submitBtn');
+  var requiredIds  = ['firstName', 'lastName', 'email', 'address', 'city', 'postal', 'country'];
+
+  function checkFormValid() {
+    var allFilled = requiredIds.every(function (id) {
+      return document.getElementById(id).value.trim().length > 0;
+    });
+    submitBtn.disabled = !(allFilled && cardComplete);
+  }
+
+  requiredIds.forEach(function (id) {
+    var el = document.getElementById(id);
+    el.addEventListener('input', function () {
+      el.classList.remove('checkout-input--error');
+      checkFormValid();
+    });
+  });
+
   card.on('change', function (e) {
-    var errEl = document.getElementById('card-errors');
-    errEl.textContent = e.error ? e.error.message : '';
+    cardComplete = e.complete;
+    document.getElementById('card-errors').textContent = e.error ? e.error.message : '';
+    checkFormValid();
   });
 
   // ── Form submit ───────────────────────────────────────────────────────────────
-  var form      = document.getElementById('checkoutForm');
-  var submitBtn = document.getElementById('submitBtn');
+  var form  = document.getElementById('checkoutForm');
+  var errEl = document.getElementById('card-errors');
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+
+    // Highlight any empty required fields
+    var firstBad = null;
+    requiredIds.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el.value.trim()) {
+        el.classList.add('checkout-input--error');
+        if (!firstBad) firstBad = el;
+      }
+    });
+    if (firstBad) { firstBad.focus(); return; }
 
     var firstName = document.getElementById('firstName').value.trim();
     var lastName  = document.getElementById('lastName').value.trim();
@@ -77,22 +120,14 @@
     var postal    = document.getElementById('postal').value.trim();
     var country   = document.getElementById('country').value.trim();
 
-    var errEl = document.getElementById('card-errors');
-    if (!firstName || !lastName || !email || !address || !city || !postal || !country) {
-      errEl.textContent = 'PLEASE FILL IN ALL REQUIRED FIELDS.';
-      return;
-    }
-
     submitBtn.textContent = '[PROCESSING...]';
     submitBtn.disabled    = true;
     errEl.textContent     = '';
 
-    var amountCents = total * 100;
-
     fetch('/api/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: amountCents }),
+      body: JSON.stringify({ amount: total * 100 }),
     })
       .then(function (r) { return r.json(); })
       .then(function (data) {
@@ -110,15 +145,14 @@
       })
       .then(function (result) {
         if (result.error) {
-          errEl.textContent     = result.error.message;
+          errEl.textContent = result.error.message;
           submitBtn.textContent = '[COMPLETE ORDER]';
           submitBtn.disabled    = false;
         } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
-          // Clear cart
-          try { localStorage.removeItem('coded_cart'); } catch (e) {}
-
-          // Show success
+          try { localStorage.removeItem('coded_cart'); } catch (e2) {}
+          document.getElementById('checkoutBottomBar').style.display = 'none';
           document.getElementById('checkoutFormState').style.display = 'none';
+          document.getElementById('summaryStrip').style.display = 'none';
           var successEl = document.getElementById('checkoutSuccess');
           successEl.style.display = 'flex';
           document.getElementById('successEmail').textContent = email;
@@ -127,7 +161,6 @@
         }
       })
       .catch(function (err) {
-        var errEl = document.getElementById('card-errors');
         errEl.textContent     = err.message || 'SOMETHING WENT WRONG. PLEASE TRY AGAIN.';
         submitBtn.textContent = '[COMPLETE ORDER]';
         submitBtn.disabled    = false;
