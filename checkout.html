@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CODED — Checkout</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>body { opacity: 0; }</style>
+</head>
+<body class="vault-page page-ready">
+
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="vault.html" class="nav-logo">CODED</a>
+      <div class="nav-links">
+        <a href="product.html" class="nav-link">[SHOP]</a>
+        <a href="vault.html#vault" class="nav-link">[VAULT]</a>
+        <a href="about.html" class="nav-link">[ABOUT]</a>
+      </div>
+      <div class="nav-right">
+        <a href="product.html" class="nav-cart" id="navCartBack">[← BACK]</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="checkout-section">
+    <div class="checkout-grid">
+
+      <!-- Order Summary -->
+      <div class="checkout-summary">
+        <div class="checkout-block-label">[ORDER_SUMMARY]</div>
+        <div class="checkout-items" id="checkoutItems"></div>
+        <div class="checkout-summary-totals">
+          <div class="checkout-total-row">
+            <span>SUBTOTAL</span>
+            <span id="checkoutSubtotal">$0</span>
+          </div>
+          <div class="checkout-total-row checkout-total-row--muted">
+            <span>SHIPPING</span>
+            <span>CALCULATED AT NEXT STEP</span>
+          </div>
+          <div class="checkout-total-row checkout-total-row--em" id="checkoutTotalRow">
+            <span>TOTAL</span>
+            <span id="checkoutTotal">$0</span>
+          </div>
+        </div>
+        <div class="checkout-summary-meta">300 UNITS &nbsp;·&nbsp; NO RESTOCK &nbsp;·&nbsp; MADE IN PORTUGAL</div>
+      </div>
+
+      <!-- Checkout Form -->
+      <div class="checkout-form-wrap">
+        <div id="checkoutFormState">
+
+          <div class="checkout-block-label">[CUSTOMER_INFO]</div>
+          <form id="checkoutForm" novalidate>
+            <div class="checkout-field-row">
+              <div class="checkout-field">
+                <label class="checkout-label">FIRST NAME</label>
+                <input class="checkout-input" id="firstName" type="text" placeholder="[FIRST_NAME_____________]" autocomplete="given-name" required>
+              </div>
+              <div class="checkout-field">
+                <label class="checkout-label">LAST NAME</label>
+                <input class="checkout-input" id="lastName" type="text" placeholder="[LAST_NAME______________]" autocomplete="family-name" required>
+              </div>
+            </div>
+            <div class="checkout-field">
+              <label class="checkout-label">EMAIL</label>
+              <input class="checkout-input" id="email" type="email" placeholder="[EMAIL_ADDRESS__________]" autocomplete="email" required>
+            </div>
+
+            <div class="checkout-block-label checkout-block-label--mt">[SHIPPING_ADDRESS]</div>
+            <div class="checkout-field">
+              <label class="checkout-label">ADDRESS</label>
+              <input class="checkout-input" id="address" type="text" placeholder="[STREET_ADDRESS_________]" autocomplete="street-address" required>
+            </div>
+            <div class="checkout-field-row">
+              <div class="checkout-field">
+                <label class="checkout-label">CITY</label>
+                <input class="checkout-input" id="city" type="text" placeholder="[CITY___________________]" autocomplete="address-level2" required>
+              </div>
+              <div class="checkout-field checkout-field--sm">
+                <label class="checkout-label">POSTAL CODE</label>
+                <input class="checkout-input" id="postal" type="text" placeholder="[00000]" autocomplete="postal-code" required>
+              </div>
+            </div>
+            <div class="checkout-field">
+              <label class="checkout-label">COUNTRY</label>
+              <input class="checkout-input" id="country" type="text" placeholder="[COUNTRY________________]" autocomplete="country-name" required>
+            </div>
+
+            <div class="checkout-block-label checkout-block-label--mt">[PAYMENT]</div>
+            <div class="checkout-field">
+              <label class="checkout-label">CARD DETAILS</label>
+              <div id="card-element" class="checkout-card-element"></div>
+            </div>
+            <div id="card-errors" class="checkout-card-errors" role="alert"></div>
+
+            <button type="submit" class="checkout-submit-btn" id="submitBtn">[COMPLETE ORDER]</button>
+          </form>
+
+        </div>
+
+        <!-- Success state (hidden until payment confirmed) -->
+        <div id="checkoutSuccess" class="checkout-success" style="display:none">
+          <div class="checkout-success-icon">✓</div>
+          <div class="checkout-success-title">ORDER CONFIRMED</div>
+          <div class="checkout-success-msg">
+            Your order has been placed. A confirmation will be sent to <span id="successEmail"></span>.
+          </div>
+          <div class="checkout-success-ref" id="successRef"></div>
+          <a href="vault.html" class="checkout-success-link">[← RETURN TO DROP]</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="checkout.js"></script>
+</body>
+</html>
