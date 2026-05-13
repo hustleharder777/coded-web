@@ -1781,7 +1781,7 @@ body.vault-page #bg-canvas {
   /* Two-column layout */
   .product-section { padding-top: var(--nav-h); min-height: 100vh; }
   .product-grid {
-    grid-template-columns: 1fr 400px;
+    grid-template-columns: 1fr 1fr;
     padding: 0;
     gap: 0;
     max-width: 100%;
