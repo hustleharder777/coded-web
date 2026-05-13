@@ -31,15 +31,6 @@
 
   <section class="checkout-section">
 
-    <!-- Compact order strip (mobile only) — flush below nav -->
-    <div class="checkout-summary-strip" id="summaryStrip">
-      <div class="strip-items" id="stripItems"></div>
-      <div class="strip-total">
-        <span class="strip-total-label">TOTAL</span>
-        <span class="strip-total-amount" id="stripTotal">$0</span>
-      </div>
-    </div>
-
     <div class="checkout-grid">
 
       <!-- LEFT / MOBILE-FIRST: Form -->
@@ -92,6 +83,12 @@
             <div id="card-errors" class="checkout-card-errors" role="alert"></div>
 
           </form>
+
+          <!-- Order manifest — shown below form on mobile, hidden on desktop -->
+          <div class="co-manifest" id="coManifest">
+            <div class="co-manifest-label">[ORDER_MANIFEST]</div>
+            <div class="co-manifest-items" id="manifestItems"></div>
+          </div>
 
         </div>
 

@@ -1864,52 +1864,56 @@ body.vault-page #bg-canvas {
 }
 
 /* Compact summary strip (mobile only) */
-.checkout-summary-strip {
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  background: #0d0d10;
+/* Order manifest — below form on mobile, hidden on desktop */
+.co-manifest {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
 }
 
-.strip-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  flex: 1;
-  min-width: 0;
-}
-
-.strip-item {
-  font-size: 8px;
-  letter-spacing: 0.16em;
-  color: var(--muted);
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.strip-sep {
-  font-size: 8px;
-  color: #333;
-  white-space: nowrap;
-}
-
-.strip-total-label {
-  font-size: 8px;
-  letter-spacing: 0.2em;
-  color: var(--muted);
-  text-transform: uppercase;
-  margin-right: 6px;
-}
-
-.strip-total-amount {
-  font-size: 13px;
+.co-manifest-label {
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--em);
+  letter-spacing: 0.22em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.manifest-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 0;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+.manifest-name {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #e8e8e8;
+  text-transform: uppercase;
+  flex: 1;
+}
+
+.manifest-meta {
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   white-space: nowrap;
+}
+
+.manifest-price {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--em);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  min-width: 36px;
+  text-align: right;
 }
 
 /* Full summary panel — hidden on mobile */
@@ -2140,8 +2144,8 @@ body.vault-page #bg-canvas {
     min-height: calc(100vh - var(--nav-h) - 80px);
   }
 
-  /* Hide compact strip on desktop */
-  .checkout-summary-strip { display: none; }
+  /* Hide manifest on desktop — right panel handles order summary */
+  .co-manifest { display: none; }
 
   /* Show full summary panel on the right */
   .checkout-summary {
