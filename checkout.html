@@ -64,7 +64,7 @@
             <div class="checkout-block-label checkout-block-label--mt">[SHIPPING_ADDRESS]</div>
             <div class="checkout-field">
               <label class="checkout-label">ADDRESS</label>
-              <input class="checkout-input" id="address" type="search" placeholder="[STREET_ADDRESS]" autocomplete="one-time-code" inputmode="text" required>
+              <input class="checkout-input" id="address" type="text" placeholder="[STREET_ADDRESS]" autocomplete="off" required>
             </div>
             <div class="checkout-field-row">
               <div class="checkout-field">
@@ -145,6 +145,5 @@
 
   <script src="https://js.stripe.com/v3/"></script>
   <script src="checkout.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9_sg2Ads7VMvW3TQ105pohM8ew9zZDsA&libraries=places&callback=initAddressAutocomplete" async defer></script>
 </body>
 </html>
