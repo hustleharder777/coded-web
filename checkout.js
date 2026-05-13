@@ -41,7 +41,7 @@
   document.getElementById('manifestItems').innerHTML = cart.map(function (item) {
     return '<div class="manifest-row">' +
       '<span class="manifest-name">' + item.name + '</span>' +
-      '<span class="manifest-meta">SIZE_' + item.size +
+      '<span class="manifest-meta">' + item.colorway + ' &nbsp;·&nbsp; SIZE_' + item.size +
         (item.qty > 1 ? ' &nbsp;·&nbsp; QTY_' + item.qty : '') + '</span>' +
       '<span class="manifest-price">$' + (item.price * item.qty) + '</span>' +
     '</div>';
@@ -74,11 +74,15 @@
   var submitBtn    = document.getElementById('submitBtn');
   var requiredIds  = ['firstName', 'lastName', 'email', 'address', 'city', 'postal', 'country'];
 
+  var bottomHint = document.getElementById('bottomHint');
+
   function checkFormValid() {
     var allFilled = requiredIds.every(function (id) {
       return document.getElementById(id).value.trim().length > 0;
     });
-    submitBtn.disabled = !(allFilled && cardComplete);
+    var valid = allFilled && cardComplete;
+    submitBtn.disabled = !valid;
+    bottomHint.style.opacity = valid ? '0' : '1';
   }
 
   requiredIds.forEach(function (id) {
