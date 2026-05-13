@@ -1812,14 +1812,15 @@ body.vault-page #bg-canvas {
   }
   /* Controls panel */
   .product-info {
-    padding: 0 48px;
+    padding: 80px 48px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 24px;
     border-left: 1px solid var(--border);
     height: 100%;
     overflow-y: auto;
+    background: var(--bg);
   }
   .product-watermark { display: none; }
   /* Vault section: fill viewport below nav, distribute space via flex */
