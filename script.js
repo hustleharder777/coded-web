@@ -443,7 +443,7 @@ function cartRender() {
         '<div class="cart-item-meta">' + item.colorway + ' &nbsp;·&nbsp; SIZE_' + item.size + '</div>' +
       '</div>' +
       '<div class="cart-item-right">' +
-        '<div class="cart-item-price">CHF ' + (item.price * item.qty) + '</div>' +
+        '<div class="cart-item-price">$' + (item.price * item.qty) + '</div>' +
         '<div class="cart-item-qty">' +
           '<button class="qty-btn" onclick="cartChangeQty(' + idx + ',-1)">−</button>' +
           '<span class="qty-val">' + item.qty + '</span>' +
@@ -482,7 +482,6 @@ function cartAddItem() {
 }
 
 (function () {
-  var buyBtn    = document.getElementById('buyBtn');
   var navBuyBtn = document.getElementById('navBuyBtn');
   var navCart   = document.querySelector('.nav-cart');
   var closeBtn  = document.getElementById('cartClose');
@@ -500,7 +499,6 @@ function cartAddItem() {
   }
 
   var panelBuyBtn = document.getElementById('panelBuyBtn');
-  if (buyBtn)      buyBtn.addEventListener('click',      function () { handleBuy(buyBtn); });
   if (navBuyBtn)   navBuyBtn.addEventListener('click',   function () { handleBuy(navBuyBtn); });
   if (panelBuyBtn) panelBuyBtn.addEventListener('click', function () { handleBuy(panelBuyBtn); });
   if (navCart) navCart.addEventListener('click', function(e) { e.preventDefault(); cartOpen(); });
@@ -510,23 +508,7 @@ function cartAddItem() {
   var checkoutBtn = document.getElementById('cartCheckoutBtn');
   if (checkoutBtn) {
     checkoutBtn.addEventListener('click', function () {
-      checkoutBtn.textContent = '[PROCESSING_ORDER...]';
-      checkoutBtn.disabled = true;
-      setTimeout(function () {
-        checkoutBtn.textContent = '[ORDER_CONFIRMED ✓]';
-        checkoutBtn.style.borderColor = 'var(--em)';
-        checkoutBtn.style.color = 'var(--em)';
-        cart = [];
-        try { localStorage.removeItem('coded_cart'); } catch(e) {}
-        cartRender();
-        setTimeout(function () {
-          checkoutBtn.textContent = '[PROCEED_TO_CHECKOUT]';
-          checkoutBtn.style.borderColor = '';
-          checkoutBtn.style.color = '';
-          checkoutBtn.disabled = false;
-          cartClose();
-        }, 2200);
-      }, 1800);
+      window.location.href = 'checkout.html';
     });
   }
 

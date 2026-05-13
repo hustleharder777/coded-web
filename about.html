@@ -28,7 +28,7 @@
         <a href="about.html">[ABOUT]</a>
       </div>
       <div class="nav-right">
-        <a href="vault.html" class="nav-cart">[CART_00]</a>
+        <a href="#" class="nav-cart">[CART_00]</a>
         <button class="nav-hamburger" id="navHamburger" aria-label="Menu"><span></span><span></span></button>
       </div>
     </div>
@@ -112,6 +112,23 @@
     </div>
   </footer>
 
+  </div>
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-drawer-inner">
+      <div class="cart-drawer-header">
+        <span class="cart-drawer-title">[CART]</span>
+        <button class="cart-drawer-close" id="cartClose">[×_CLOSE]</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-drawer-footer">
+        <p class="cart-empty-msg" id="cartEmpty">[CART_EMPTY]</p>
+        <div class="cart-total" id="cartTotal"></div>
+        <button class="cart-checkout-btn" id="cartCheckoutBtn">[PROCEED_TO_CHECKOUT]</button>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>
