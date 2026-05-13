@@ -987,10 +987,10 @@ body::before {
 }
 
 @media (max-width: 800px) {
-  .vault-section { height: calc(100vh - var(--nav-h)); display: flex; flex-direction: column; padding-top: 0; }
+  .vault-page .vault-section { height: calc(100svh - var(--nav-h)); display: flex; flex-direction: column; padding: 0; }
   .vault-header { padding: 20px 20px; }
   .vault-meta { font-size: 9px; letter-spacing: 0.12em; white-space: nowrap; }
-  .cw-stage { flex: 1; height: auto; min-height: 0; }
+  .vault-page .cw-stage { flex: 1; height: auto; min-height: 0; }
   .cw-indicators { width: 100%; }
 }
 
@@ -1404,7 +1404,7 @@ body.vault-page #bg-canvas {
 }
 
 @media (max-width: 800px) {
-  .brand-hero { padding-bottom: 56px; }
+  .brand-hero { height: 100svh; padding-bottom: 56px; }
   .brand-hero-content { padding: 0 24px; }
   .brand-hero-title { font-size: clamp(32px, 12vw, 48px); }
 }
