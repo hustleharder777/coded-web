@@ -37,14 +37,15 @@
   desktopSubtotal.textContent = '$' + total;
   desktopTotal.textContent    = '$' + total;
 
-  // Mobile compact strip
-  var stripItems = document.getElementById('stripItems');
-  var stripTotal = document.getElementById('stripTotal');
-  stripItems.innerHTML = cart.map(function (item) {
-    return '<span class="strip-item">' + item.colorway + ' · SIZE_' + item.size +
-      (item.qty > 1 ? ' · QTY_' + item.qty : '') + '</span>';
-  }).join('<span class="strip-sep"> — </span>');
-  stripTotal.textContent = '$' + total;
+  // Mobile order manifest (below form)
+  document.getElementById('manifestItems').innerHTML = cart.map(function (item) {
+    return '<div class="manifest-row">' +
+      '<span class="manifest-name">' + item.name + '</span>' +
+      '<span class="manifest-meta">SIZE_' + item.size +
+        (item.qty > 1 ? ' &nbsp;·&nbsp; QTY_' + item.qty : '') + '</span>' +
+      '<span class="manifest-price">$' + (item.price * item.qty) + '</span>' +
+    '</div>';
+  }).join('');
 
   // Fixed bar total
   document.getElementById('bottomTotal').textContent = '$' + total;
@@ -152,7 +153,6 @@
           try { localStorage.removeItem('coded_cart'); } catch (e2) {}
           document.getElementById('checkoutBottomBar').style.display = 'none';
           document.getElementById('checkoutFormState').style.display = 'none';
-          document.getElementById('summaryStrip').style.display = 'none';
           var successEl = document.getElementById('checkoutSuccess');
           successEl.style.display = 'flex';
           document.getElementById('successEmail').textContent = email;
