@@ -1791,7 +1791,7 @@ body.vault-page #bg-canvas {
   .product-panel-desc { font-size: 11px; line-height: 1.7; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
 
   /* Panel buy button */
-  .product-panel-buy-btn { width: 100%; padding: 16px; font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; background: transparent; color: var(--em); border: 1px solid var(--em); cursor: pointer; transition: box-shadow 0.3s, background 0.3s; }
+  .product-panel-buy-btn { width: 100%; padding: 16px; margin-top: auto; font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; background: transparent; color: var(--em); border: 1px solid var(--em); cursor: pointer; transition: box-shadow 0.3s, background 0.3s; }
   .product-panel-buy-btn:hover { box-shadow: 0 0 32px var(--glow-em); background: rgba(45,212,127,0.04); }
   .product-panel-buy-btn.added { color: #fff; border-color: #fff; }
 
