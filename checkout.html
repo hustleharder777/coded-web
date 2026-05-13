@@ -38,7 +38,13 @@
 
         <div id="checkoutFormState">
 
-          <div class="checkout-block-label">[CUSTOMER_INFO]</div>
+          <!-- Order manifest — above form on mobile, hidden on desktop -->
+          <div class="co-manifest" id="coManifest">
+            <div class="co-manifest-label">[ORDER_MANIFEST]</div>
+            <div class="co-manifest-items" id="manifestItems"></div>
+          </div>
+
+          <div class="checkout-block-label checkout-block-label--mt">[CUSTOMER_INFO]</div>
           <form id="checkoutForm" novalidate>
             <div class="checkout-field-row">
               <div class="checkout-field">
@@ -83,12 +89,6 @@
             <div id="card-errors" class="checkout-card-errors" role="alert"></div>
 
           </form>
-
-          <!-- Order manifest — shown below form on mobile, hidden on desktop -->
-          <div class="co-manifest" id="coManifest">
-            <div class="co-manifest-label">[ORDER_MANIFEST]</div>
-            <div class="co-manifest-items" id="manifestItems"></div>
-          </div>
 
         </div>
 

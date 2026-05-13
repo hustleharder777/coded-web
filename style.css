@@ -1864,11 +1864,11 @@ body.vault-page #bg-canvas {
 }
 
 /* Compact summary strip (mobile only) */
-/* Order manifest — below form on mobile, hidden on desktop */
+/* Order manifest — above form on mobile, hidden on desktop */
 .co-manifest {
-  margin-top: 32px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
+  padding-bottom: 24px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
 }
 
 .co-manifest-label {
