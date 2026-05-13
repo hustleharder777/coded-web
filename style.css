@@ -2314,5 +2314,5 @@ body.vault-page #bg-canvas {
 
 .pac-matched { color: var(--em); }
 
-.pac-icon { display: none; }
+.pac-icon { display: none !important; }
 
