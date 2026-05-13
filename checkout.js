@@ -171,3 +171,42 @@
       });
   });
 })();
+
+// Google Places address autocomplete — called by the Maps API script
+function initAddressAutocomplete() {
+  var addressInput = document.getElementById('address');
+  if (!addressInput) return;
+
+  var autocomplete = new google.maps.places.Autocomplete(addressInput, {
+    types: ['address'],
+    fields: ['address_components'],
+  });
+
+  autocomplete.addListener('place_changed', function () {
+    var place = autocomplete.getPlace();
+    if (!place.address_components) return;
+
+    var streetNumber = '', route = '', city = '', postal = '', country = '';
+
+    place.address_components.forEach(function (c) {
+      var t = c.types[0];
+      if (t === 'street_number')                   streetNumber = c.long_name;
+      if (t === 'route')                           route        = c.long_name;
+      if (t === 'locality' || t === 'postal_town') city         = c.long_name;
+      if (t === 'postal_code')                     postal       = c.long_name;
+      if (t === 'country')                         country      = c.long_name;
+    });
+
+    addressInput.value                              = (streetNumber + ' ' + route).trim();
+    document.getElementById('city').value           = city;
+    document.getElementById('postal').value         = postal;
+    document.getElementById('country').value        = country;
+
+    // Re-run validation since fields were filled programmatically
+    ['address', 'city', 'postal', 'country'].forEach(function (id) {
+      document.getElementById(id).classList.remove('checkout-input--error');
+    });
+    // Trigger checkFormValid via the address input event
+    addressInput.dispatchEvent(new Event('input'));
+  });
+}
