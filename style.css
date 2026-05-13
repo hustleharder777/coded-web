@@ -1830,4 +1830,6 @@ body.vault-page #bg-canvas {
   .cw-stage { flex: 1; height: auto; min-height: 0; }
   /* Desktop hero: cover fill (mobile keeps contain) */
   .brand-hero-bg-img { object-fit: cover; object-position: center center; }
+  /* Centre CTA button horizontally at bottom of hero */
+  .brand-hero-content { text-align: center; }
 }
