@@ -336,12 +336,15 @@ if (productImgWrap) {
   var productImg  = document.getElementById('productImg');
   var productImgBack = document.getElementById('productImgBack');
   var cwSwatches  = document.querySelectorAll('.cw-swatch');
-  var editionEl   = document.getElementById('productEditionLabel');
-  var priceValEl  = document.querySelector('.product-price-val');
+  var editionEl      = document.getElementById('productEditionLabel');
+  var panelEditionEl = document.getElementById('productPanelEdition');
+  var priceValEl     = document.querySelector('.product-price-val');
 
   function updateProduct() {
     var src = imageMap[activeCw];
-    if (editionEl)  editionEl.textContent  = names[activeCw] + ' EDITION';
+    var editionText = names[activeCw] + ' EDITION';
+    if (editionEl)      editionEl.textContent      = editionText;
+    if (panelEditionEl) panelEditionEl.textContent = editionText;
     if (priceValEl) priceValEl.textContent  = prices[activeCw];
     if (!productImg || !src) return;
     productImg.classList.remove('img-missing');
@@ -496,8 +499,10 @@ function cartAddItem() {
     }, 1800);
   }
 
-  if (buyBtn)    buyBtn.addEventListener('click',    function () { handleBuy(buyBtn); });
-  if (navBuyBtn) navBuyBtn.addEventListener('click', function () { handleBuy(navBuyBtn); });
+  var panelBuyBtn = document.getElementById('panelBuyBtn');
+  if (buyBtn)      buyBtn.addEventListener('click',      function () { handleBuy(buyBtn); });
+  if (navBuyBtn)   navBuyBtn.addEventListener('click',   function () { handleBuy(navBuyBtn); });
+  if (panelBuyBtn) panelBuyBtn.addEventListener('click', function () { handleBuy(panelBuyBtn); });
   if (navCart) navCart.addEventListener('click', function(e) { e.preventDefault(); cartOpen(); });
   if (closeBtn) closeBtn.addEventListener('click', cartClose);
   if (overlay)  overlay.addEventListener('click', cartClose);
