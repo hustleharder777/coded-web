@@ -1404,7 +1404,7 @@ body.vault-page #bg-canvas {
 }
 
 @media (max-width: 800px) {
-  .brand-hero { padding-bottom: 56px; }
+  .brand-hero { height: 100svh; padding-bottom: 56px; }
   .brand-hero-content { padding: 0 24px; }
   .brand-hero-title { font-size: clamp(32px, 12vw, 48px); }
 }
