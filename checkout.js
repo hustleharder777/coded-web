@@ -93,14 +93,6 @@
     });
   });
 
-  var addrInput = document.getElementById('address');
-  addrInput.addEventListener('touchstart', function () {
-    addrInput.removeAttribute('readonly');
-  }, { once: true });
-  addrInput.addEventListener('focus', function () {
-    addrInput.removeAttribute('readonly');
-  }, { once: true });
-
   card.on('change', function (e) {
     cardComplete = e.complete;
     document.getElementById('card-errors').textContent = e.error ? e.error.message : '';

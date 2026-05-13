@@ -2316,3 +2316,6 @@ body.vault-page #bg-canvas {
 
 .pac-icon { display: none !important; }
 
+#address::-webkit-search-cancel-button,
+#address::-webkit-search-decoration { display: none; }
+
