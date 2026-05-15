@@ -1062,7 +1062,7 @@ body::before {
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 160px 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 60px;
   position: relative;
   z-index: 1;
