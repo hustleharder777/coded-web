@@ -991,6 +991,7 @@ body::before {
   .vault-header { padding: 20px 20px; }
   .vault-meta { font-size: 9px; letter-spacing: 0.12em; white-space: nowrap; }
   .cw-stage { flex: 1; height: auto; min-height: 0; }
+  .vault-page .cw-stage { margin-left: -20px; margin-right: -20px; width: calc(100% + 40px); }
   .cw-indicators { width: 100%; }
 }
 
