@@ -1236,6 +1236,7 @@ body::before {
   .product-grid { padding: 0; gap: 0; }
   .product-info { padding: 24px 20px 40px; }
   .product-watermark { display: none; }
+  .product-scarcity { display: none; }
   .product-img-wrap {
     aspect-ratio: 3 / 4;
     width: 100%;
@@ -1840,6 +1841,15 @@ body.vault-page #bg-canvas {
     background: var(--bg);
   }
   .product-watermark { display: none; }
+  .product-scarcity {
+    margin-top: auto;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
   /* Vault section: fill viewport below nav, distribute space via flex */
   .vault-section { height: calc(100vh - var(--nav-h)); display: flex; flex-direction: column; }
   .cw-stage { flex: 1; height: auto; min-height: 0; }
@@ -2264,7 +2274,7 @@ body.vault-page #bg-canvas {
   }
 
   .checkout-form-wrap {
-    padding: 60px 48px 0;
+    padding: 32px 48px 0;
   }
 
   .checkout-field-row {
