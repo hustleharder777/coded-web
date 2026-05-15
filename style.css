@@ -987,7 +987,7 @@ body::before {
 }
 
 @media (max-width: 800px) {
-  .vault-page .vault-section { height: calc(100vh - var(--nav-h)); display: flex; flex-direction: column; padding-top: 54px; padding-left: 0; padding-right: 0; padding-bottom: 0; }
+  .vault-page .vault-section { height: calc(100vh - var(--nav-h)); display: flex; flex-direction: column; padding-top: 54px; }
   .vault-header { padding: 20px 20px; }
   .vault-meta { font-size: 9px; letter-spacing: 0.12em; white-space: nowrap; }
   .cw-stage { flex: 1; height: auto; min-height: 0; }
