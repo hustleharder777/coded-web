@@ -577,7 +577,7 @@ function cartAddItem() {
         cta.classList.add('visible');
       }
     });
-  }, { threshold: 0, rootMargin: '-56px 0px 0px 0px' });
+  }, { threshold: 0, rootMargin: window.innerWidth > 800 ? '-57px 0px 0px 0px' : '-56px 0px 0px 0px' });
 
   io.observe(hero);
 })();
